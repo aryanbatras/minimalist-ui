@@ -1,4 +1,4 @@
-import { Button } from 'signals-ui'
+import {Button} from "signals-ui";
 
 export default function App() {
   return (

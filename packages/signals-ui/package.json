@@ -1,16 +1,21 @@
 {
   "name": "signals-ui",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "A minimalist, framework-agnostic component library where components respond to signals of intention, not rigid variants or configuration APIs",
   "type": "module",
   "main": "./index.js",
+  "bin": {
+    "signals-ui": "./bin/signals-ui.js"
+  },
   "exports": {
     ".": "./index.js",
     "./*": "./*"
   },
+  "scripts": {},
   "files": [
     "index.js",
     "src",
+    "bin",
     "README.md",
     "LICENSE"
   ],
