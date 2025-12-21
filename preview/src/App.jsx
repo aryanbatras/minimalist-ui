@@ -2,8 +2,8 @@ import {Button} from "signals-ui";
 
 export default function App() {
   return (
-    <>
-    <Button logic>Click Me</Button>
-    </>
+    <div className="items-center justify-center flex h-screen w-screen">
+      <Button>Hello World</Button>
+    </div>
   );
 }

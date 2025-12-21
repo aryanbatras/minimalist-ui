@@ -1,219 +1,83 @@
-/**
- * Button — Signal UI (Canonical Single-File Component)
- *
- * PURPOSE
- * -------
- * A complete, ownable button built on intent.
- * This file is the documentation.
- * This file is the system.
- *
- * CONTRACT (GUARANTEES)
- * --------------------
- * - Semantic <button>
- * - Keyboard accessible
- * - Focus-visible
- * - Disabled is respected
- * - Works without motion
- * - Works without icons
- * - Works without JS enhancements
- *
- * MENTAL MODEL
- * ------------
- * - Props are signals (boolean only)
- * - Signals express intent
- * - Intent is interpreted in layers
- * - Layers are independent dimensions
- * - Defaults are structural, not implicit
- *
- * HOW TO EXTEND
- * -------------
- * - Add a new signal (boolean)
- * - Decide which layer reacts to it
- * - Add one `if (signal)` line
- * - Done
- *
- * NOTHING IS HIDDEN
- * -----------------
- * - No helpers
- * - No variants
- * - No config
- * - No magic
- */
+export function Button(contract = {}) {
+  const signals = { ...contract };
+  const signalLayers = {};
+  const leases = {};
+  const spreads = {};
 
-export function Button({
-  /* --------------------------------------------------
-   * SEMANTIC INTENT (what this button means)
-   * -------------------------------------------------- */
-  primary,
-  secondary,
-  neutral,
-  success,
-  warning,
-  danger,
+  const layer = (name) => (className, signalKey) =>
+    (signalLayers[name] = signalLayers[name] || [], 
+     signalKey && signals[signalKey]
+       ? (signalLayers[name][0] = className, delete signals[signalKey])
+       : !signalKey && (signalLayers[name][0] = className));
 
-  /* --------------------------------------------------
-   * SURFACE INTENT (how strong it appears)
-   * -------------------------------------------------- */
-  solid,
-  soft,
-  outline,
-  ghost,
-  link,
+  const lease = (name, key = name) =>
+    signals[key] && (leases[name] = signals[key], delete signals[key]);
 
-  /* --------------------------------------------------
-   * SIZE / DENSITY
-   * -------------------------------------------------- */
-  xs,
-  sm,
-  md,
-  lg,
+  const spread = (name, key = name) =>
+    signals[key] && (spreads[name] = signals[key], delete signals[key]);
 
-  /* --------------------------------------------------
-   * SHAPE
-   * -------------------------------------------------- */
-  square,
-  rounded,
-  pill,
-  circle,
+  const semantic   = layer("semantic");
+  const surface    = layer("surface");
+  const size       = layer("size");
+  const shape      = layer("shape");
+  const layout     = layer("layout");
+  const override   = layer("override");
 
-  /* --------------------------------------------------
-   * COMPOSITION
-   * -------------------------------------------------- */
-  iconOnly,
-  hasIcon,
-  loading,
+  shape("rounded-xs");
+  surface("shadow-xl");
+  size("px-4 py-2 text-base");
+  semantic("bg-black text-white");
 
-  /* --------------------------------------------------
-   * LAYOUT
-   * -------------------------------------------------- */
-  block,
+  signals.primary   && semantic("bg-blue-500 text-neutral-100", "primary");
+  signals.secondary && semantic("bg-pink-800 text-neutral-100", "secondary");
 
-  /* --------------------------------------------------
-   * BEHAVIOR (optional motion / feedback)
-   * -------------------------------------------------- */
-  hoverMotion,
-  pressMotion,
+  signals.xs        && size("px-2 py-1 text-xs", "xs");
+  signals.sm        && size("px-3 py-1.5 text-sm", "sm");
+  signals.md        && size("px-4 py-2 text-base", "md");
+  signals.lg        && size("px-6 py-3 text-lg", "lg");
+  signals.xl        && size("px-8 py-4 text-xl", "xl");
 
-  /* --------------------------------------------------
-   * STATE
-   * -------------------------------------------------- */
-  disabled,
-  active,
+  signals.pill      && shape("rounded-full", "pill");
+  signals.rounded   && shape("rounded-lg", "rounded");
+  signals.square    && shape("rounded-none", "square");
+  signals.circle    && shape("rounded-full aspect-square p-0", "circle");
 
-  /* --------------------------------------------------
-   * JS-LEVEL INTENT
-   * -------------------------------------------------- */
-  submitForm,
+  signals.ghost     && surface("bg-transparent", "ghost");
+  signals.outline   && surface("border border-current", "outline");
+  signals.link      && surface("bg-transparent underline p-0", "link");
 
-  /* --------------------------------------------------
-   * ESCAPE HATCH
-   * -------------------------------------------------- */
-  className = "",
-  children,
-  ...props
-}) {
-  const classes = [];
+  signals.block     && layout("w-full", "block");
 
-  /* ==================================================
-   * FOUNDATION (always applied)
-   * ================================================== */
-  classes.push(
-    "inline-flex items-center justify-center",
-    "select-none",
-    "font-medium",
-    "transition-all duration-150",
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-    "disabled:opacity-50 disabled:pointer-events-none"
-  );
+  signals.className && override(signals.className, "className");
+    
+  signals.home && (() => (
+    semantic("bg-pink-800 text-neutral-100"), 
+    size("px-6 py-3 text-lg"), 
+    shape("rounded-full"), 
+    layout("w-full")
+  ))(), delete signals.home;
 
-  /* ==================================================
-   * SEMANTIC LAYER
-   * ================================================== */
-  if (primary) classes.push("text-white");
-  if (secondary) classes.push("text-neutral-900");
-  if (neutral) classes.push("text-neutral-800");
-  if (success) classes.push("text-green-700");
-  if (warning) classes.push("text-yellow-800");
-  if (danger) classes.push("text-red-700");
+  signals.cta && (() => (
+    semantic("bg-blue-600 text-white"),
+    size("px-8 py-4 text-xl"),
+    shape("rounded-lg")
+  ))(), delete signals.cta;
 
-  if (!primary && !secondary && !neutral && !success && !warning && !danger) {
-    classes.push("text-neutral-900");
-  }
+  signals.children  && lease("children");
 
-  /* ==================================================
-   * SURFACE LAYER
-   * ================================================== */
-  if (solid) classes.push("bg-current");
-  if (soft) classes.push("bg-current/10");
-  if (outline) classes.push("border border-current");
-  if (ghost) classes.push("bg-transparent");
-  if (link) classes.push("bg-transparent underline p-0");
-
-  if (!solid && !soft && !outline && !ghost && !link) {
-    classes.push("bg-neutral-100");
-  }
-
-  /* ==================================================
-   * SIZE LAYER
-   * ================================================== */
-  if (xs) classes.push("px-2 py-1 text-xs");
-  if (sm) classes.push("px-3 py-1.5 text-sm");
-  if (md) classes.push("px-4 py-2 text-base");
-  if (lg) classes.push("px-6 py-3 text-lg");
-
-  if (!xs && !sm && !md && !lg) {
-    classes.push("px-4 py-2 text-base");
-  }
-
-  /* ==================================================
-   * SHAPE LAYER
-   * ================================================== */
-  if (square) classes.push("rounded-none");
-  if (rounded) classes.push("rounded-md");
-  if (pill) classes.push("rounded-full");
-  if (circle) classes.push("rounded-full aspect-square p-0");
-
-  if (!square && !rounded && !pill && !circle) {
-    classes.push("rounded-md");
-  }
-
-  /* ==================================================
-   * COMPOSITION LAYER
-   * ================================================== */
-  if (iconOnly) classes.push("p-2");
-  if (hasIcon) classes.push("gap-2");
-  if (loading) classes.push("pointer-events-none opacity-70");
-
-  /* ==================================================
-   * LAYOUT LAYER
-   * ================================================== */
-  if (block) classes.push("w-full");
-
-  /* ==================================================
-   * BEHAVIOR LAYER
-   * ================================================== */
-  if (hoverMotion) classes.push("hover:scale-105");
-  if (pressMotion) classes.push("active:scale-95");
-
-  /* ==================================================
-   * STATE LAYER
-   * ================================================== */
-  if (active) classes.push("ring-2 ring-current");
-
-  /* ==================================================
-   * JS-LEVEL INTENT
-   * ================================================== */
-  if (submitForm) props.type = "submit";
-  if (disabled) props.disabled = true;
-
-  /* ==================================================
-   * ESCAPE HATCH
-   * ================================================== */
-  if (className) classes.push(className);
+  signals.disabled  && spread("disabled");
+  signals.onClick   && spread("onClick");
+  signals.type      && spread("type");
 
   return (
-    <button {...props} className={classes.join(" ")}>
-      {loading ? "Loading…" : children}
+    <button
+      {...spreads}
+      className={Object.values(signalLayers)
+        .map(l => l[0])
+        .filter(Boolean)
+        .join(" ")}
+    >
+      {leases.children}
     </button>
   );
 }
