@@ -2,9 +2,8 @@ import { Button } from "signal-layers";
 
 export default function App() {
   return (
-    <div className="items-center justify-center flex h-screen w-screen">
-      <Button ghost>Hello World</Button>
-      <Button secondary rounded hoverShrink activeDepth>Hello World</Button>
+    <div className="bg items-center justify-center flex h-screen w-screen">
+      <Button>Hello World</Button> 
     </div>
   );
 }

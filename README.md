@@ -307,3 +307,16 @@ Code is owned, readable, and changeable.
 Nothing is hidden. Nothing is forced.
 This is not a shortcut.
 This is a foundation.
+
+## Tailwind CSS Settings for Development
+
+To get autocompletion and hover information for the signals,
+add the following to your vscode settings.json :
+
+"tailwindCSS.experimental.classRegex": [
+  ["\\b\\w+\\s*\\(\\s*[\"'`]([^\"'`]*)[\"'`]"]
+]
+
+"tailwindCSS.includePaths": [
+  "${workspaceFolder}/packages/signal-layers/src"
+]

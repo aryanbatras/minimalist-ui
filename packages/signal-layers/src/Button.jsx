@@ -50,16 +50,7 @@
  * ──────────────────────────────────────────────────────────────────────────────
  *
  * Structural signals are organized into mutually exclusive groups called "layers".
- *
- * Layers defined by this component:
- *
- *   semantic  → visual intent / tone (primary, secondary, default)
- *   surface   → surface treatment (ghost, outline, link)
- *   size      → physical dimensions (xs → xl)
- *   shape     → geometry (pill, rounded, square, circle)
- *   layout    → layout behavior (block)
- *   override  → escape hatch for direct class injection
- *
+ * 
  * Resolution Rules:
  *   - Only one signal may win per layer
  *   - If multiple signals from the same layer are provided:
@@ -74,9 +65,6 @@
  *
  * Content signals represent renderable data that must be preserved verbatim.
  *
- * Defined leases:
- *   - children
- *
  * Leased values:
  *   - Are removed from the signal pool
  *   - Do not participate in class resolution
@@ -87,11 +75,6 @@
  * ──────────────────────────────────────────────────────────────────────────────
  *
  * Native signals are forwarded directly to the <button> element.
- *
- * Supported native attributes:
- *   - onClick
- *   - disabled
- *   - type
  *
  * These signals:
  *   - Are removed from the signal pool
@@ -174,101 +157,76 @@ export function Button(contract = {}) {
    * ──────────────────────────────────────────────────────────────────────────── */
 
   // Essential Layers
-  const semantic = layer("semantic");
-  const surface  = layer("surface");
   const shadow   = layer("shadow");
   const shape    = layer("shape");
+  const color    = layer("color");
   const size     = layer("size");
-  
+  const text     = layer("text");
+
   // Animation Layers
   const hover    = layer("hover");
   const active   = layer("active");
+  const animation = layer("animation");
 
   // Layout Layers
   const layout   = layer("layout");
   const override = layer("override");
 
+  // Escape hatch
+  const escapehatch = layer("escapehatch");
+  
   /* ────────────────────────────────────────────────────────────────────────────
-   * DEFAULT FOUNDATION
+   * DEFAULT FOR EACH LAYER
    * ──────────────────────────────────────────────────────────────────────────── */
+ 
+  color("bg-gray-800 text-white");
+  shadow("shadow-xs shadow-black/50");
+  shape("rounded-xs"); 
+  size("px-4 py-2");
+  text("text-xs font-light font-sans");
+  
+  hover("hover:scale-105 hover:shadow-md");
+  active("active:scale-90 active:shadow-md");
+  animation("transition-all duration-300 cursor-pointer");
 
-  shape("rounded-xs");
-  surface("shadow-xl");
-  size("px-4 py-2 text-base");
-  semantic("bg-black text-white");
+  layout("flex items-center justify-center");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * COMPOSITE SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
-  // Predefined button patterns for common use cases
 
   signals.cta && (() => (
-    semantic("bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold"),
-    size("px-8 py-4 text-lg"),
-    shape("rounded-full"),
-    shadow("shadow-lg shadow-purple-500/25"),
-    hover("hover:scale-105 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-200"),
-    active("active:scale-95")
+    color("bg-blue-600/95 text-white"),
+    shadow("shadow-xs shadow-blue-500/40"),
+    hover("hover:scale-105 hover:shadow-md"),
+    active("active:scale-90 active:shadow-md")
   ))(), delete signals.cta;
 
-  signals.destructive && (() => (
-    semantic("bg-red-600 text-white border-2 border-red-700"),
-    hover("hover:bg-red-700 hover:shadow-lg hover:shadow-red-500/30 transition-all duration-200"),
-    active("active:scale-95 active:bg-red-800"),
-    shape("rounded-lg")
-  ))(), delete signals.destructive;
-
-  signals.minimal && (() => (
-    semantic("bg-gray-100 text-gray-800 border border-gray-300"),
-    hover("hover:bg-gray-200 hover:border-gray-400 transition-all duration-200"),
-    active("active:bg-gray-300"),
-    shape("rounded-md"),
-    shadow("shadow-sm")
-  ))(), delete signals.minimal;
-
-  signals.social && (() => (
-    semantic("bg-white text-gray-700 border border-gray-200"),
-    hover("hover:bg-gray-50 hover:shadow-md transition-all duration-200"),
-    active("active:bg-gray-100"),
-    shape("rounded-full"),
-    size("px-4 py-4")
-  ))(), delete signals.social;
-
-  signals.fab && (() => (
-    semantic("bg-blue-500 text-white"),
-    hover("hover:bg-blue-600 hover:scale-110 transition-all duration-200"),
-    active("active:scale-95"),
-    shape("rounded-full"),
-    size("px-4 py-4"),
-    shadow("shadow-lg shadow-blue-500/30")
-  ))(), delete signals.fab;
-
-  signals.premium && (() => (
-    semantic("bg-gradient-to-r from-yellow-400 to-orange-500 text-white"),
-    surface("border-2 border-yellow-300"),
-    hover("hover:scale-105 hover:shadow-xl hover:shadow-yellow-400/40 transition-all duration-300"),
-    active("active:scale-95"),
-    shape("rounded-lg")
-  ))(), delete signals.premium;
+  signals.neumorphism && (() => (
+    shadow("shadow-inner"),
+    color("bg-linear-to-r from-gray-300 to-gray-200 text-gray-800"),
+    hover("hover:scale-105 hover:bg-white/50 hover:shadow-inner hover:shadow-gray-500/30"),
+    active("active:scale-95 active:bg-white/50 active:shadow-inner active:shadow-gray-500/30"),
+    animation("transition-all duration-700 cursor-pointer"),
+    shape("rounded-md")
+  ))(), delete signals.neumorphism;
 
   signals.ghost && (() => (
-    semantic("text-gray-600 hover:text-gray-800"),
-    surface("bg-transparent hover:bg-gray-100"),
-    hover("transition-all duration-200"),
-    active("active:bg-gray-200"),
-    shape("rounded-md")
+    color("bg-transparent text-gray-800"),
+    hover("hover:scale-110 hover:bg-gray-100/50 hover:text-gray-900"),
+    active("active:scale-95 active:bg-gray-100/75 active:text-gray-900"),
+    animation("transition-all duration-500 cursor-pointer"),
+    shadow("shadow-none"),
+    shape("rounded-full")
   ))(), delete signals.ghost;
 
   /* ────────────────────────────────────────────────────────────────────────────
    * STRUCTURAL SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  signals.primary   && semantic("bg-blue-500 text-neutral-100", "primary");
-  signals.secondary && semantic("bg-pink-800 text-neutral-100", "secondary");
-  signals.success && semantic("bg-green-500 text-white", "success");
-  signals.warning && semantic("bg-yellow-500 text-black", "warning");
-  signals.danger  && semantic("bg-red-500 text-white", "danger");
-  signals.info    && semantic("bg-cyan-500 text-white", "info");
+  signals.red    && color("bg-red-600 text-white", "red");
+  signals.green  && color("bg-green-500 text-white", "green");
+  signals.blue   && color("bg-blue-500/90 text-neutral-100", "blue");
 
   signals.xs && size("px-2 py-1 text-xs", "xs");
   signals.sm && size("px-3 py-1.5 text-sm", "sm");
@@ -276,63 +234,40 @@ export function Button(contract = {}) {
   signals.lg && size("px-6 py-3 text-lg", "lg");
   signals.xl && size("px-8 py-4 text-xl", "xl");
 
-  signals.pill   && shape("rounded-full", "pill");
-  signals.rounded&& shape("rounded-lg", "rounded");
   signals.square && shape("rounded-none", "square");
+  signals.rounded&& shape("rounded-lg", "rounded");
+  signals.pill   && shape("rounded-full", "pill");
   signals.circle && shape("rounded-full aspect-square p-0", "circle");
-
-  signals.ghost   && surface("bg-transparent", "ghost");
-  signals.outline && surface("border border-current", "outline");
-  signals.link    && surface("bg-transparent underline p-0", "link");
-  
-  // Advanced surface treatments
-  signals.glass           && surface("bg-white/10 backdrop-blur-md border border-white/20", "glass");
-  signals.gradient        && surface("bg-gradient-to-r from-blue-500 to-purple-600", "gradient");
-  signals.gradientRadial  && surface("bg-gradient-radial from-pink-400 to-purple-600", "gradientRadial");
-  signals.textured        && surface("bg-gradient-to-br from-gray-100 to-gray-200", "textured");
-  signals.neon            && surface("bg-black border-2 border-cyan-400 shadow-lg shadow-cyan-400/50", "neon");
-  signals.metallic        && surface("bg-gradient-to-br from-gray-300 to-gray-500 shadow-inner", "metallic");
-  signals.holographic     && surface("bg-gradient-to-r from-purple-400 via-pink-500 to-red-500", "holographic");
-  signals.matte           && surface("bg-gray-800 shadow-none", "matte");
-  signals.glossy          && surface("bg-gradient-to-b from-white/20 to-transparent", "glossy");
 
   signals.block   && layout("w-full", "block");
   signals.inline  && layout("inline-flex", "inline");
   signals.center  && layout("mx-auto", "center");
+
+  signals.innerShadow && shadow("shadow-inner", "innerShadow");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * ANIMATION SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
 
     // Hover animations
-  signals.hoverEnlarge && hover("hover:scale-105 transition-transform duration-200", "hoverEnlarge");
-  signals.hoverShrink && hover("hover:scale-95 transition-transform duration-200", "hoverShrink");
-  signals.hoverLift && hover("hover:-translate-y-0.5 transition-all duration-200", "hoverLift");
-  signals.hoverGlow && hover("hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300", "hoverGlow");
-  signals.hoverBounce && hover("hover:animate-bounce", "hoverBounce");
-  signals.hoverRotate && hover("hover:rotate-3 transition-transform duration-200", "hoverRotate");
-  signals.hoverFlip && hover("hover:rotate-y-180 transition-transform duration-500 preserve-3d", "hoverFlip");
-  signals.hoverShake && hover("hover:animate-pulse", "hoverShake");
-  signals.hoverSlide && hover("hover:translate-x-1 transition-transform duration-200", "hoverSlide");
-  signals.hoverFade && hover("hover:opacity-80 transition-opacity duration-200", "hoverFade");
-  signals.hoverBorder && hover("hover:border-2 hover:border-blue-400 transition-all duration-200", "hoverBorder");
+  signals.hoverEnlarge && hover("hover:scale-105", "hoverEnlarge");
+  signals.hoverShrink && hover("hover:scale-95", "hoverShrink");
+  signals.hoverLift && hover("hover:-translate-y-0.5", "hoverLift");
+  signals.hoverFade && hover("hover:opacity-40", "hoverFade");
+  signals.hoverBorder && hover("hover:border hover:border-black", "hoverBorder");
 
   // Active animations
   signals.activeShrink && active("active:scale-95 transition-transform", "activeShrink");
-  signals.activePulse && active("active:animate-pulse", "activePulse");
-  signals.activeDepth && active("active:translate-y-0.5", "activeDepth");
-  signals.activeRipple && active("active:ring-4 active:ring-blue-400/50", "activeRipple");
-  signals.activeExplode && active("active:scale-110 active:shadow-2xl", "activeExplode");
-  signals.activeSlide && active("active:translate-y-0.5", "activeSlide");
-  signals.activeSpin && active("active:animate-spin", "activeSpin");
-  signals.activeFlash && active("active:bg-white active:text-black transition-colors duration-100", "activeFlash");
-  signals.activeGlow && active("active:shadow-lg active:shadow-green-400/50", "activeGlow");
+  signals.activeRipple && active("active:ring-4 active:ring-black active:scale-90", "activeRipple");
+  signals.activeExplode && active("active:scale-110 active:ring-8 active:ring-black ", "activeExplode");
+  signals.activeSlide && active("active:translate-x-0.5", "activeSlide");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * ESCAPE HATCH
    * ──────────────────────────────────────────────────────────────────────────── */
 
   signals.className && override(signals.className, "className");
+  signals.class && override(signals.class, "class");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * CONTENT & NATIVE ATTRIBUTES
@@ -360,3 +295,4 @@ export function Button(contract = {}) {
     </button>
   );
 }
+
