@@ -1,195 +1,48 @@
-/**
- * ──────────────────────────────────────────────────────────────────────────────
- * Button Component — Signal Contract & Reference Implementation
- * ──────────────────────────────────────────────────────────────────────────────
- *
- * This file defines the complete behavioral and structural contract of <Button />.
- *
- * The Button component is implemented as a signal-resolved system, where every
- * prop represents an explicit and predictable intention expressed by the caller.
- *
- * This file serves three purposes:
- *   1. Defines the public contract of the Button component
- *   2. Documents how signals are resolved and composed
- *   3. Acts as the reference pattern for building future components
- *
- * The implementation below intentionally avoids indirection, configuration
- * objects, and implicit behavior. All behavior is visible and editable here.
- *
- * ──────────────────────────────────────────────────────────────────────────────
- * BUTTON CONTRACT
- * ──────────────────────────────────────────────────────────────────────────────
- *
- * The Button component accepts a single object argument called the "contract".
- *
- *   export function Button(contract = {})
- *
- * The contract may contain the following categories of signals:
- *
- *   1. Structural Signals
- *      - Influence visual identity and layout
- *      - Mutually exclusive within defined groups (layers)
- *
- *   2. Content Signals
- *      - Provide renderable content
- *      - Preserved verbatim and never interpreted as styling
- *
- *   3. Native Attribute Signals
- *      - Passed directly to the underlying <button> element
- *      - Maintain full HTML and accessibility compatibility
- *
- * Every signal is:
- *   - Optional
- *   - Processed exactly once
- *   - Deterministically resolved
- *
- * Unknown or unused signals are intentionally ignored.
- *
- * ──────────────────────────────────────────────────────────────────────────────
- * STRUCTURAL SIGNAL GROUPS (LAYERS)
- * ──────────────────────────────────────────────────────────────────────────────
- *
- * Structural signals are organized into mutually exclusive groups called "layers".
- * 
- * Resolution Rules:
- *   - Only one signal may win per layer
- *   - If multiple signals from the same layer are provided:
- *       → The last processed signal wins
- *       → No warnings are emitted
- *
- * This guarantees deterministic output without runtime validation.
- *
- * ──────────────────────────────────────────────────────────────────────────────
- * CONTENT SIGNALS (LEASES)
- * ──────────────────────────────────────────────────────────────────────────────
- *
- * Content signals represent renderable data that must be preserved verbatim.
- *
- * Leased values:
- *   - Are removed from the signal pool
- *   - Do not participate in class resolution
- *   - Are rendered explicitly in JSX
- *
- * ──────────────────────────────────────────────────────────────────────────────
- * NATIVE ATTRIBUTE SIGNALS (SPREADS)
- * ──────────────────────────────────────────────────────────────────────────────
- *
- * Native signals are forwarded directly to the <button> element.
- *
- * These signals:
- *   - Are removed from the signal pool
- *   - Are spread without transformation
- *
- * ──────────────────────────────────────────────────────────────────────────────
- * EXTENSION GUARANTEES
- * ──────────────────────────────────────────────────────────────────────────────
- *
- * Developers may safely:
- *   - Add new layers
- *   - Add new structural signals
- *   - Define composite signals (presets)
- *   - Modify defaults
- *   - Remove unused signals
- *
- * All changes remain local to this file and do not affect other components.
- *
- * ──────────────────────────────────────────────────────────────────────────────
- */
-
 export function Button(contract = {}) {
-
   /* ────────────────────────────────────────────────────────────────────────────
-   * INTERNAL STATE
+   * CONTRACT
+   * ────────────────────────────────────────────────────────────────────────────
+  
+   * COMPOSITE: cta, neumorphism, ghost
+   * INTENT: red/green/blue | xs-sm-md-lg-xl | square/rounded/pill/circle | block/inline/center | innerShadow
+   * BEHAVIOR: hoverEnlarge/hoverShrink/hoverLift/hoverFade/hoverBorder | activeShrink/activeRipple/activeExplode/activeSlide
+   * NATIVE: children, disabled, onClick, type | ESCAPE: className/class
+   * HIERARCHY: Composite > Intent > Native > Escape
+   * LAYERS: shadow→shape→color→size→text→hover→active→layout→animation
+   * RULES: No warnings, deterministic, signals delete after use, spread native props to button
+ 
+   * ────────────────────────────────────────────────────────────────────────────
+   * CONTRACT TOOLS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  const signalLayers = {}; // Stores resolved classes per layer
-  const leases = {};      // Stores renderable content
-  const spreads = {};     // Stores native HTML attributes
-
-  /**
-   * Clone the incoming contract to ensure:
-   *   - Signals can be consumed destructively
-   *   - Each signal is processed exactly once
-   */
-  const signals = { ...contract };
-
-  /* ────────────────────────────────────────────────────────────────────────────
-   * HELPERS
-   * ──────────────────────────────────────────────────────────────────────────── */
-
-  /**
-   * layer(name)
-   *
-   * Creates a resolver for a mutually exclusive signal group.
-   *
-   * Behavior:
-   *   - Each layer stores exactly one resolved class
-   *   - If signalKey is provided and present:
-   *       → className is applied
-   *       → signal is deleted
-   *   - If signalKey is omitted:
-   *       → className is applied unconditionally (default)
-   */
+  const [signals, signalLayers, leases, spreads] = [{ ...contract }, {}, {}, {}];
+  
   const layer = (name) => (className, signalKey) =>
     (signalLayers[name] = signalLayers[name] || [],
      signalKey && signals[signalKey]
        ? (signalLayers[name][0] = className, delete signals[signalKey])
        : !signalKey && (signalLayers[name][0] = className));
-
-  /**
-   * lease(name, key)
-   *
-   * Extracts content from the contract for rendering.
-   */
+  
   const lease = (name, key = name) =>
     signals[key] && (leases[name] = signals[key], delete signals[key]);
-
-  /**
-   * spread(name, key)
-   *
-   * Extracts native attributes for direct forwarding.
-   */
+  
   const spread = (name, key = name) =>
     signals[key] && (spreads[name] = signals[key], delete signals[key]);
 
   /* ────────────────────────────────────────────────────────────────────────────
-   * LAYER DEFINITIONS
+   * LAYERS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  // Essential Layers
-  const shadow   = layer("shadow");
-  const shape    = layer("shape");
-  const color    = layer("color");
-  const size     = layer("size");
-  const text     = layer("text");
-
-  // Animation Layers
-  const hover    = layer("hover");
-  const active   = layer("active");
-  const animation = layer("animation");
-
-  // Layout Layers
-  const layout   = layer("layout");
-  const override = layer("override");
-
-  // Escape hatch
+  const shadow      = layer("shadow");      shadow("shadow-xs shadow-black/50");
+  const shape       = layer("shape");       shape("rounded-xs");
+  const color       = layer("color");       color("bg-gray-800 text-white");
+  const size        = layer("size");        size("px-4 py-2");
+  const text        = layer("text");        text("text-xs font-light font-sans");
+  const hover       = layer("hover");       hover("hover:scale-105 hover:shadow-md");
+  const active      = layer("active");      active("active:scale-90 active:shadow-md");
+  const layout      = layer("layout");      layout("flex items-center justify-center");
+  const animation   = layer("animation");   animation("transition-all duration-300 cursor-pointer");
   const escapehatch = layer("escapehatch");
-  
-  /* ────────────────────────────────────────────────────────────────────────────
-   * DEFAULT FOR EACH LAYER
-   * ──────────────────────────────────────────────────────────────────────────── */
- 
-  color("bg-gray-800 text-white");
-  shadow("shadow-xs shadow-black/50");
-  shape("rounded-xs"); 
-  size("px-4 py-2");
-  text("text-xs font-light font-sans");
-  
-  hover("hover:scale-105 hover:shadow-md");
-  active("active:scale-90 active:shadow-md");
-  animation("transition-all duration-300 cursor-pointer");
-
-  layout("flex items-center justify-center");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * COMPOSITE SIGNALS
@@ -221,7 +74,7 @@ export function Button(contract = {}) {
   ))(), delete signals.ghost;
 
   /* ────────────────────────────────────────────────────────────────────────────
-   * STRUCTURAL SIGNALS
+   * INTENT SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
 
   signals.red    && color("bg-red-600 text-white", "red");
@@ -246,31 +99,29 @@ export function Button(contract = {}) {
   signals.innerShadow && shadow("shadow-inner", "innerShadow");
 
   /* ────────────────────────────────────────────────────────────────────────────
-   * ANIMATION SIGNALS
+   * BEHAVIOR SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-    // Hover animations
   signals.hoverEnlarge && hover("hover:scale-105", "hoverEnlarge");
-  signals.hoverShrink && hover("hover:scale-95", "hoverShrink");
-  signals.hoverLift && hover("hover:-translate-y-0.5", "hoverLift");
-  signals.hoverFade && hover("hover:opacity-40", "hoverFade");
-  signals.hoverBorder && hover("hover:border hover:border-black", "hoverBorder");
+  signals.hoverShrink  && hover("hover:scale-95", "hoverShrink");
+  signals.hoverLift    && hover("hover:-translate-y-0.5", "hoverLift");
+  signals.hoverFade    && hover("hover:opacity-40", "hoverFade");
+  signals.hoverBorder  && hover("hover:border hover:border-black", "hoverBorder");
 
-  // Active animations
-  signals.activeShrink && active("active:scale-95 transition-transform", "activeShrink");
-  signals.activeRipple && active("active:ring-4 active:ring-black active:scale-90", "activeRipple");
-  signals.activeExplode && active("active:scale-110 active:ring-8 active:ring-black ", "activeExplode");
-  signals.activeSlide && active("active:translate-x-0.5", "activeSlide");
+  signals.activeShrink   && active("active:scale-95 transition-transform", "activeShrink");
+  signals.activeRipple   && active("active:ring-4 active:ring-black active:scale-90", "activeRipple");
+  signals.activeExplode  && active("active:scale-110 active:ring-8 active:ring-black ", "activeExplode");
+  signals.activeSlide    && active("active:translate-x-0.5", "activeSlide");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * ESCAPE HATCH
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  signals.className && override(signals.className, "className");
-  signals.class && override(signals.class, "class");
+  signals.className && escapehatch(signals.className, "className");
+  signals.class && escapehatch(signals.class, "class");
 
   /* ────────────────────────────────────────────────────────────────────────────
-   * CONTENT & NATIVE ATTRIBUTES
+   * NATIVE ATTRIBUTES
    * ──────────────────────────────────────────────────────────────────────────── */
 
   signals.children && lease("children");
@@ -295,4 +146,3 @@ export function Button(contract = {}) {
     </button>
   );
 }
-
