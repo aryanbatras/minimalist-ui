@@ -42,6 +42,7 @@ export function Button(contract = {}) {
   const active      = layer("active");      active("active:scale-90 active:shadow-md");
   const layout      = layer("layout");      layout("flex items-center justify-center");
   const animation   = layer("animation");   animation("transition-all duration-300 cursor-pointer");
+  const border      = layer("border");      border("border-0");
   const escapehatch = layer("escapehatch");
 
   /* ────────────────────────────────────────────────────────────────────────────
@@ -97,6 +98,9 @@ export function Button(contract = {}) {
   signals.center  && layout("mx-auto", "center");
 
   signals.innerShadow && shadow("shadow-inner", "innerShadow");
+  signals.noShadow && shadow("shadow-none", "noShadow");
+
+  signals.border && border("border border-gray-800", "border");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * BEHAVIOR SIGNALS
@@ -107,11 +111,13 @@ export function Button(contract = {}) {
   signals.hoverLift    && hover("hover:-translate-y-0.5", "hoverLift");
   signals.hoverFade    && hover("hover:opacity-40", "hoverFade");
   signals.hoverBorder  && hover("hover:border hover:border-black", "hoverBorder");
+  signals.hoverNone    && hover("hover:scale-100 hover:opacity-100", "hoverNone");
 
   signals.activeShrink   && active("active:scale-95 transition-transform", "activeShrink");
   signals.activeRipple   && active("active:ring-4 active:ring-black active:scale-90", "activeRipple");
   signals.activeExplode  && active("active:scale-110 active:ring-8 active:ring-black ", "activeExplode");
   signals.activeSlide    && active("active:translate-x-0.5", "activeSlide");
+  signals.activeNone     && active("active:scale-100 active:opacity-100 ", "activeNone");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * ESCAPE HATCH
