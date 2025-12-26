@@ -9,7 +9,6 @@ export function Button(contract = {}) {
    * NATIVE: children, disabled, onClick, type | ESCAPE: className/class
    * HIERARCHY: Composite > Intent > Native > Escape
    * LAYERS: shadow→shape→color→size→text→hover→active→layout→animation
-   * RULES: No warnings, deterministic, signals delete after use, spread native props to button
  
    * ────────────────────────────────────────────────────────────────────────────
    * CONTRACT TOOLS
