@@ -26,18 +26,16 @@ export function Card(contract = {}) {
    * CONTRACT TOOLS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-    const layer = (name, scope = "card") => (className, key) =>
+    const layer = (name, scope = "card") => (className) =>
       (signalLayers[scope] ||= {},
       signalLayers[scope][name] ||= [],
-      key && signals[key]
-        ? (signalLayers[scope][name][0] = className, delete signals[key])
-        : !key && (signalLayers[scope][name][0] = className));
+      (signalLayers[scope][name][0] = className));
 
     const lease = (name, key = name) =>
-      signals[key] && (leases[name] = signals[key], delete signals[key]);
+      signals[key] && (leases[name] = signals[key]);
 
     const spread = (name, key = name) =>
-      signals[key] && (spreads[name] = signals[key], delete signals[key]);
+      signals[key] && (spreads[name] = signals[key]);
 
     const classes = (layers = {}) =>
       Object.values(layers).map(l => l[0]).filter(Boolean).join(" ");
@@ -46,106 +44,103 @@ export function Card(contract = {}) {
    * BASE LAYERS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-    const base        = layer("base");        base("bg-gray-800 text-white rounded-lg");
-    const layout      = layer("layout");      layout("flex flex-col justify-items-start");
-    const spacing     = layer("spacing");     spacing("p-0 gap-4");
-    const border      = layer("border");      border("border-0");
-    const shadow      = layer("shadow");      shadow("shadow-2xl shadow-gray-800/80");
-    const hover       = layer("hover");       hover("hover:scale-100");
-    const animation   = layer("animation");   animation("transition-all duration-300");
-    const escape      = layer("escape");      
+    const base        = layer("base",     "card");        base("bg-gray-800 text-white rounded-lg");
+    const layout      = layer("layout",   "card");      layout("flex flex-col justify-items-start");
+    const spacing     = layer("spacing",  "card");     spacing("p-0 gap-4");
+    const border      = layer("border",   "card");      border("border-0");
+    const shadow      = layer("shadow",   "card");      shadow("shadow-2xl shadow-gray-800/80");
+    const hover       = layer("hover",    "card");       hover("hover:scale-100");
+    const animation   = layer("animation","card");   animation("transition-all duration-300");
+    const escape      = layer("escape",   "card");      
 
   /* ────────────────────────────────────────────────────────────────────────────
    * SCOPED BASE LAYERS
    * ──────────────────────────────────────────────────────────────────────────── */
   
-    const imageBase       = layer("base", "image");       imageBase("rounded-lg object-cover");
-    const imageSize       = layer("size", "image");       imageSize("w-full h-auto");
-    const imageAspect     = layer("aspect", "image");     imageAspect("aspect-auto");
+    const imageBase         = layer("base",   "image");       imageBase("rounded-lg object-cover");
+    const imageSize         = layer("size",   "image");       imageSize("w-full h-auto");
+    const imageAspect       = layer("aspect", "image");       imageAspect("aspect-auto");
 
-    const titleBase       = layer("base", "title");       titleBase("font-light font-sans font-stretch-condensed px-4 py-0");
-    const titleSize       = layer("size", "title");       titleSize("text-2xl");
-    const titleLayout     = layer("layout", "title");     
-    const descriptionBase = layer("base", "description"); descriptionBase("font-light font-sans font-stretch-condensed px-4 py-0");
-    const descriptionSize = layer("size", "description"); descriptionSize("text-lg");
-    const descriptionLayout = layer("layout", "description"); 
-    const buttonBase      = layer("base", "button");      buttonBase("font-sans mb-2 cursor-pointer");
+    const titleBase         = layer("base",   "title");       titleBase("font-light font-sans font-stretch-condensed px-4 py-0");
+    const titleSize         = layer("size",   "title");       titleSize("text-2xl");
+    const titleLayout       = layer("layout", "title");       
+
+    const descriptionBase    = layer("base",   "description"); descriptionBase("font-light font-sans font-stretch-condensed px-4 py-0");
+    const descriptionSize    = layer("size",   "description"); descriptionSize("text-lg");
+    const descriptionLayout  = layer("layout", "description"); 
+
+    const buttonBase         = layer("base",   "button");      buttonBase("font-sans mb-2 cursor-pointer");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * INTENT SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
 
     signals.interactive &&
-    hover("cursor-pointer hover:scale-[1.01]", "interactive");
+    hover("cursor-pointer hover:scale-[1.01]");
 
     signals.xs && (() => (
       titleSize("text-md"),
       descriptionSize("text-xs"),
       spacing("gap-2"),
       imageSize("w-auto h-24")
-    ))(), delete signals.xs;
+    ))();
 
     signals.sm && (() => (
       titleSize("text-lg"),
       descriptionSize("text-md"),
       spacing("gap-4"),
       imageSize("w-auto h-32")
-    ))(), delete signals.sm;
+    ))();
 
     signals.md && (() => (
       titleSize("text-2xl"),
       descriptionSize("text-lg"),
       spacing("gap-6"),
       imageSize("w-auto h-48")
-    ))(), delete signals.md;
+    ))();
 
     signals.lg && (() => (
       titleSize("text-3xl"),
       descriptionSize("text-xl"),
       spacing("gap-8"),
       imageSize("w-auto h-64")
-    ))(), delete signals.lg;
+    ))();
 
     signals.xl && (() => (
       titleSize("text-4xl"),
       descriptionSize("text-2xl"),
       spacing("gap-10"),
       imageSize("w-auto h-96")
-    ))(), delete signals.xl;
+    ))();
 
     signals.centered && (() => (
       titleLayout("text-center"),
       descriptionLayout("text-center")
-    ))(), delete signals.centered;
+    ))();
 
     signals.rightAligned && (() => (
       titleLayout("text-right"),
       descriptionLayout("text-right")
-    ))(), delete signals.rightAligned;
+    ))();
 
     signals.leftAligned && (() => (
       titleLayout("text-left"),
       descriptionLayout("text-left")
-    ))(), delete signals.leftAligned;
+    ))();
 
     signals.imageCircle && (() => (
       imageBase("rounded-full aspect-square p-0 object-cover"),
       layout("flex flex-col justify-center items-center")
-    ))(), delete signals.imageCircle;
+    ))();
 
     signals.imageLandscape && (() => (
       imageAspect("aspect-video")
-    ))(), delete signals.imagePortrait;
+    ))();
 
     signals.transparent && (() => (
       base("bg-transparent"),
       shadow("shadow-none")
-    ))(), delete signals.transparent;
-
-
-  /* ────────────────────────────────────────────────────────────────────────────
-   * SCOPED INTENT SIGNALS
-   * ──────────────────────────────────────────────────────────────────────────── */
+    ))();
 
   /* ────────────────────────────────────────────────────────────────────────────
    * DATA LEASES
@@ -161,14 +156,14 @@ export function Card(contract = {}) {
    * EVENTS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-   signals.onButtonClick    && spread("onButtonClick");
+    signals.onButtonClick    && spread("onButtonClick");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * ESCAPE
    * ──────────────────────────────────────────────────────────────────────────── */
 
-    signals.class     && escape(signals.class, "class");
-    signals.className && escape(signals.className, "className");
+    signals.class     && escape(signals.class);
+    signals.className && escape(signals.className);
 
   /* ──────────────────────────────────────────────────────────────────────────────
    * INTERNAL COMPONENTS

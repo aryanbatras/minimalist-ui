@@ -1,4 +1,4 @@
-import { Card, Spinner, ProgressBar } from "signal-layers";
+import { Card, Spinner, ProgressBar, Button } from "signal-layers";
 
 export default function App() {
   return (
@@ -15,7 +15,8 @@ export default function App() {
         lg
       /> */}
       {/* <Spinner transparent /> */}
-      {/* <ProgressBar value={50}/> */}
+      <Button cta rounded lg hoverLift>Button</Button>
+      <ProgressBar value={50} primary lg/>
     </div>
   );
 }

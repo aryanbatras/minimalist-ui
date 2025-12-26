@@ -16,17 +16,15 @@ export function Button(contract = {}) {
 
   const [signals, signalLayers, leases, spreads] = [{ ...contract }, {}, {}, {}];
   
-  const layer = (name) => (className, signalKey) =>
-    (signalLayers[name] = signalLayers[name] || [],
-     signalKey && signals[signalKey]
-       ? (signalLayers[name][0] = className, delete signals[signalKey])
-       : !signalKey && (signalLayers[name][0] = className));
+  const layer = (name) => (className) =>
+    (signalLayers[name] ||= [],
+    (signalLayers[name][0] = className));
   
   const lease = (name, key = name) =>
-    signals[key] && (leases[name] = signals[key], delete signals[key]);
+    signals[key] && (leases[name] = signals[key]);
   
   const spread = (name, key = name) =>
-    signals[key] && (spreads[name] = signals[key], delete signals[key]);
+    signals[key] && (spreads[name] = signals[key]);
 
   /* ────────────────────────────────────────────────────────────────────────────
    * LAYERS
@@ -42,7 +40,7 @@ export function Button(contract = {}) {
   const layout      = layer("layout");      layout("flex items-center justify-center");
   const animation   = layer("animation");   animation("transition-all duration-300 cursor-pointer");
   const border      = layer("border");      border("border-0");
-  const escapehatch = layer("escapehatch");
+  const escape      = layer("escape");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * COMPOSITE SIGNALS
@@ -53,7 +51,7 @@ export function Button(contract = {}) {
     shadow("shadow-xs shadow-blue-500/40"),
     hover("hover:scale-105 hover:shadow-md"),
     active("active:scale-90 active:shadow-md")
-  ))(), delete signals.cta;
+  ))();
 
   signals.neumorphism && (() => (
     shadow("shadow-inner"),
@@ -62,7 +60,7 @@ export function Button(contract = {}) {
     active("active:scale-95 active:bg-white/50 active:shadow-inner active:shadow-gray-500/30"),
     animation("transition-all duration-700 cursor-pointer"),
     shape("rounded-md")
-  ))(), delete signals.neumorphism;
+  ))();
 
   signals.ghost && (() => (
     color("bg-transparent text-gray-800"),
@@ -71,59 +69,55 @@ export function Button(contract = {}) {
     animation("transition-all duration-500 cursor-pointer"),
     shadow("shadow-none"),
     shape("rounded-full")
-  ))(), delete signals.ghost;
+  ))();
 
   /* ────────────────────────────────────────────────────────────────────────────
    * INTENT SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  signals.red    && color("bg-red-600 text-white", "red");
-  signals.green  && color("bg-green-500 text-white", "green");
-  signals.blue   && color("bg-blue-500/90 text-neutral-100", "blue");
+  signals.red    && color("bg-red-600 text-white");
+  signals.green  && color("bg-green-500 text-white");
+  signals.blue   && color("bg-blue-500/90 text-neutral-100");
 
-  signals.xs && size("px-2 py-1 text-xs", "xs");
-  signals.sm && size("px-3 py-1.5 text-sm", "sm");
-  signals.md && size("px-4 py-2 text-base", "md");
-  signals.lg && size("px-6 py-3 text-lg", "lg");
-  signals.xl && size("px-8 py-4 text-xl", "xl");
+  signals.xs && size("px-2 py-1 text-xs");
+  signals.sm && size("px-3 py-1.5 text-sm");
+  signals.md && size("px-4 py-2 text-base");
+  signals.lg && size("px-6 py-3 text-lg");
+  signals.xl && size("px-8 py-4 text-xl");
 
-  signals.square && shape("rounded-none", "square");
-  signals.rounded&& shape("rounded-lg", "rounded");
-  signals.pill   && shape("rounded-full", "pill");
-  signals.circle && shape("rounded-full aspect-square p-0", "circle");
+  signals.square && shape("rounded-none");
+  signals.rounded&& shape("rounded-lg");
+  signals.pill   && shape("rounded-full");
+  signals.circle && shape("rounded-full aspect-square p-0");
 
-  signals.block   && layout("w-full", "block");
-  signals.inline  && layout("inline-flex", "inline");
-  signals.center  && layout("mx-auto", "center");
+  signals.block   && layout("w-full");
+  signals.inline  && layout("inline-flex");
+  signals.center  && layout("mx-auto");
 
-  signals.innerShadow && shadow("shadow-inner", "innerShadow");
-  signals.noShadow && shadow("shadow-none", "noShadow");
+  signals.innerShadow && shadow("shadow-inner");
+  signals.noShadow    && shadow("shadow-none");
 
-  signals.border && border("border border-gray-800", "border");
+  signals.border && border("border border-gray-800");
 
-  /* ────────────────────────────────────────────────────────────────────────────
-   * BEHAVIOR SIGNALS
-   * ──────────────────────────────────────────────────────────────────────────── */
+  signals.hoverEnlarge && hover("hover:scale-105");
+  signals.hoverShrink  && hover("hover:scale-95");
+  signals.hoverLift    && hover("hover:-translate-y-0.5");
+  signals.hoverFade    && hover("hover:opacity-40");
+  signals.hoverBorder  && hover("hover:border hover:border-black");
+  signals.hoverNone    && hover("hover:scale-100 hover:opacity-100");
 
-  signals.hoverEnlarge && hover("hover:scale-105", "hoverEnlarge");
-  signals.hoverShrink  && hover("hover:scale-95", "hoverShrink");
-  signals.hoverLift    && hover("hover:-translate-y-0.5", "hoverLift");
-  signals.hoverFade    && hover("hover:opacity-40", "hoverFade");
-  signals.hoverBorder  && hover("hover:border hover:border-black", "hoverBorder");
-  signals.hoverNone    && hover("hover:scale-100 hover:opacity-100", "hoverNone");
-
-  signals.activeShrink   && active("active:scale-95 transition-transform", "activeShrink");
-  signals.activeRipple   && active("active:ring-4 active:ring-black active:scale-90", "activeRipple");
-  signals.activeExplode  && active("active:scale-110 active:ring-8 active:ring-black ", "activeExplode");
-  signals.activeSlide    && active("active:translate-x-0.5", "activeSlide");
-  signals.activeNone     && active("active:scale-100 active:opacity-100 ", "activeNone");
+  signals.activeShrink   && active("active:scale-95 transition-transform");
+  signals.activeRipple   && active("active:ring-4 active:ring-black active:scale-90");
+  signals.activeExplode  && active("active:scale-110 active:ring-8 active:ring-black");
+  signals.activeSlide    && active("active:translate-x-0.5");
+  signals.activeNone     && active("active:scale-100 active:opacity-100");
 
   /* ────────────────────────────────────────────────────────────────────────────
-   * ESCAPE HATCH
+   * ESCAPE
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  signals.className && escapehatch(signals.className, "className");
-  signals.class && escapehatch(signals.class, "class");
+  signals.className && escape(signals.className);
+  signals.class     && escape(signals.class);
 
   /* ────────────────────────────────────────────────────────────────────────────
    * NATIVE ATTRIBUTES
@@ -141,7 +135,9 @@ export function Button(contract = {}) {
 
   return (
     <button
-      {...spreads}
+      type={spreads.type}
+      onClick={spreads.onClick}
+      disabled={spreads.disabled}
       className={Object.values(signalLayers)
         .map(layer => layer[0])
         .filter(Boolean)

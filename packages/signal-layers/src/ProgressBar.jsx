@@ -33,19 +33,17 @@ export function ProgressBar(contract = {}) {
    * CONTRACT TOOLS
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  const layer = (name) => (className, key) =>
+  const layer = (name) => (className) =>
     (signalLayers[name] ||= [],
-     key && signals[key]
-       ? (signalLayers[name][0] = className, delete signals[key])
-       : !key && (signalLayers[name][0] = className));
+     (signalLayers[name][0] = className));
 
   const lease = (name, key = name) =>
     signals[key] !== undefined &&
-    (leases[name] = signals[key], delete signals[key]);
+    (leases[name] = signals[key]);
 
   const spread = (name, key = name) =>
     signals[key] !== undefined &&
-    (spreads[name] = signals[key], delete signals[key]);
+    (spreads[name] = signals[key]);
 
   /* ────────────────────────────────────────────────────────────────────────────
    * BASE LAYERS
@@ -84,19 +82,18 @@ export function ProgressBar(contract = {}) {
    * INTENT — SIZE
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  signals.sm && size("h-1 w-16", "sm");
-  signals.md && size("h-2 w-32", "md");
-  signals.lg && size("h-3 w-48", "lg");
-  signals.xl && size("h-4 w-64", "xl");
-  signals.responsive && size("h-2 w-full", "responsive");
+  signals.sm && size("h-1 w-16");
+  signals.md && size("h-2 w-32");
+  signals.lg && size("h-3 w-48");
+  signals.xl && size("h-4 w-64");
+  signals.responsive && size("h-2 w-full");
 
   /* ────────────────────────────────────────────────────────────────────────────
    * INTENT — SHAPE
    * ──────────────────────────────────────────────────────────────────────────── */
 
   signals.square  && shape(
-    "[&::-webkit-progress-bar]:rounded-none [&::-webkit-progress-value]:rounded-none [&::-moz-progress-bar]:rounded-none",
-    "square"
+    "[&::-webkit-progress-bar]:rounded-none [&::-webkit-progress-value]:rounded-none [&::-moz-progress-bar]:rounded-none"
   );
 
   /* ────────────────────────────────────────────────────────────────────────────
@@ -104,36 +101,31 @@ export function ProgressBar(contract = {}) {
    * ──────────────────────────────────────────────────────────────────────────── */
 
   signals.primary && color(
-    "[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-blue-500 [&::-webkit-progress-value]:bg-blue-500",
-    "primary"
+    "[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-blue-500 [&::-webkit-progress-value]:bg-blue-500"
   );
 
   signals.success && color(
-    "[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-green-500 [&::-webkit-progress-value]:bg-green-500",
-    "success"
+    "[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-green-500 [&::-webkit-progress-value]:bg-green-500"
   );
 
   signals.danger && color(
-    "[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-red-500 [&::-webkit-progress-value]:bg-red-500",
-    "danger"
+    "[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-red-500 [&::-webkit-progress-value]:bg-red-500"
   );
 
   signals.neutral && color(
-    "[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-gray-500 [&::-webkit-progress-value]:bg-gray-500",
-    "neutral"
+    "[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-gray-500 [&::-webkit-progress-value]:bg-gray-500"
   );
 
   /* ────────────────────────────────────────────────────────────────────────────
    * STYLE
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  signals.inline   && layout("inline-block", "inline");
-  signals.block    && layout("block", "block");
-  signals.centered && layout("mx-auto", "centered");
+  signals.inline   && layout("inline-block");
+  signals.block    && layout("block");
+  signals.centered && layout("mx-auto");
 
   signals.transparent && color(
-    "[&::-webkit-progress-bar]:bg-transparent",
-    "transparent"
+    "[&::-webkit-progress-bar]:bg-transparent [&::-moz-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-transparent"
   );
 
   /* ────────────────────────────────────────────────────────────────────────────
@@ -152,8 +144,8 @@ export function ProgressBar(contract = {}) {
    * ESCAPE
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  signals.class     && escape(signals.class, "class");
-  signals.className && escape(signals.className, "className");
+  signals.class     && escape(signals.class);
+  signals.className && escape(signals.className);
 
   /* ────────────────────────────────────────────────────────────────────────────
    * RENDER
