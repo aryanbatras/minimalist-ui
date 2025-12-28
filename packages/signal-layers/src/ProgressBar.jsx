@@ -3,142 +3,131 @@ export function ProgressBar(contract = {}) {
    * CONTRACT
    * ────────────────────────────────────────────────────────────────────────────
    *
-   * SIGNALS:   xs, sm, md, lg, xl
-   *            primary, success, danger, neutral
-   *            inline, block, centered, transparent
-   *            square
-   * 
-   * LEASES:    value, max 
+   * ProgressBar - Visual progress indicator with customizable styling
+   *
+   * Foundation: HTML progress element with enhanced styling
+   *
+   * Signals:
+   *   Size: xs, sm, md, lg, xl, responsive
+   *   Color: primary, success, danger, neutral, transparent
+   *   Layout: inline, block, centered
+   *   Shape: square
+   *
+   * Data:
+   *   value - Progress value (0-100)
+   *   max - Maximum progress value
+   *
+   * Defaults: md, block, primary
+   *
+   * Usage:
+   * <ProgressBar value={50} />
+   * <ProgressBar value={75} success lg />
+   * <ProgressBar value={30} danger transparent />
+   *
    *
    * ──────────────────────────────────────────────────────────────────────────── */
 
-  const [signals, signalLayers, leases] = [{ ...contract }, {}, {}];
+  const [inputSignal, layerSignal, dataSignal] = [{ ...contract }, {}, {}];
 
   /* ────────────────────────────────────────────────────────────────────────────
    * CONTRACT TOOLS
    * ──────────────────────────────────────────────────────────────────────────── */
 
   const layer = (name) => (className) =>
-    (signalLayers[name] ||= [],
-     (signalLayers[name][0] = className));
+    (layerSignal[name] ||= [],
+     (layerSignal[name][0] = className));
 
-  const lease = (name, key = name) =>
-    signals[key] !== undefined &&
-    (leases[name] = signals[key]);
+  const data = (name, key = name) =>
+    dataSignal[key] !== undefined &&
+    (dataSignal[name] = dataSignal[key]);
 
   /* ────────────────────────────────────────────────────────────────────────────
    * LAYERS
    * ──────────────────────────────────────────────────────────────────────────── */
-
-  const base   = layer("base");
-  const size   = layer("size");
-  const color  = layer("color");
-  const shape  = layer("shape");
-  const layout = layer("layout");
-  const escape = layer("escape");
-
+    let progressbar;
+     (() => 
+        (
+            progressbar = {
+                base: layer("base", "progressbar"),
+                size: layer("size", "progressbar"),
+                color: layer("color", "progressbar"),
+                shape: layer("shape", "progressbar"),
+                layout: layer("layout", "progressbar")
+            }
+        )
+    )(),
  /* ────────────────────────────────────────────────────────────────────────────
    * DEFAULTS
    * ──────────────────────────────────────────────────────────────────────────── */
-
-    (
-        base(
-                "[&::-webkit-progress-value]:transition-all " +
-                "[&::-webkit-progress-bar]:transition-all " +
-                "[&::-moz-progress-bar]:transition-all"
-            ),
-
-        shape(
-                "[&::-webkit-progress-value]:rounded-full " +
-                "[&::-webkit-progress-bar]:rounded-full " +
-                "[&::-moz-progress-bar]:rounded-full"
-            ),
-
-        color(
-                "[&::-webkit-progress-value]:bg-violet-400 " +
-                "[&::-webkit-progress-bar]:bg-slate-300 " +
-                "[&::-moz-progress-bar]:bg-violet-400"
-            ),
-        
-        size("h-2 w-32"),
-        
-        layout("block")
-
-    );
-
+    (() => 
+        (
+            progressbar.base("[&::-webkit-progress-value]:transition-all [&::-webkit-progress-bar]:transition-all [&::-moz-progress-bar]:transition-all" ),
+            progressbar.shape("[&::-webkit-progress-value]:rounded-full [&::-webkit-progress-bar]:rounded-full [&::-moz-progress-bar]:rounded-full" ),
+            progressbar.color("[&::-webkit-progress-value]:bg-violet-400 [&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-violet-400" ),
+            progressbar.size("h-2 w-32"),
+            progressbar.layout("block")
+        )
+    )(),
   /* ────────────────────────────────────────────────────────────────────────────
-   * INTENT
+   * SHAPE SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
-
-    signals.square       && shape(
-                                   `[&::-webkit-progress-bar]:rounded-none 
-                                    [&::-webkit-progress-value]:rounded-none 
-                                    [&::-moz-progress-bar]:rounded-none`
-                                );
-
-    signals.primary      && color(
-                                   `[&::-webkit-progress-bar]:bg-slate-300 
-                                    [&::-moz-progress-bar]:bg-blue-500 
-                                    [&::-webkit-progress-value]:bg-blue-500`
-                                );
-
-    signals.success      && color(
-                                   `[&::-webkit-progress-bar]:bg-slate-300 
-                                    [&::-moz-progress-bar]:bg-green-500 
-                                    [&::-webkit-progress-value]:bg-green-500`
-                                );
-
-    signals.danger       && color(
-                                   `[&::-webkit-progress-bar]:bg-slate-300 
-                                    [&::-moz-progress-bar]:bg-red-500 
-                                    [&::-webkit-progress-value]:bg-red-500`
-                               );
-
-    signals.neutral      && color(
-                                   `[&::-webkit-progress-bar]:bg-slate-300 
-                                    [&::-moz-progress-bar]:bg-gray-500 
-                                    [&::-webkit-progress-value]:bg-gray-500`
-                               );
-
-                            
-    signals.transparent  && color(
-                                   `[&::-webkit-progress-bar]:bg-transparent 
-                                    [&::-moz-progress-bar]:bg-transparent 
-                                    [&::-webkit-progress-value]:bg-transparent`
-                               );
-                            
-    signals.sm           && size("h-1 w-16");
-    signals.md           && size("h-2 w-32");
-    signals.lg           && size("h-3 w-48");
-    signals.xl           && size("h-4 w-64");
-    signals.responsive   && size("h-2 w-full");
-
-    signals.inline       && layout("inline-block");
-    signals.block        && layout("block");
-    signals.centered     && layout("mx-auto");
+    (() => 
+        (
+           inputSignal.square       && progressbar.shape(`[&::-webkit-progress-bar]:rounded-none [&::-webkit-progress-value]:rounded-none [&::-moz-progress-bar]:rounded-none`)
+        )
+    )(),
   /* ────────────────────────────────────────────────────────────────────────────
-   * ESCAPE & NATIVE
+   * COLOR SIGNALS
    * ──────────────────────────────────────────────────────────────────────────── */
-
-    signals.value       && lease("value");
-    signals.max         && lease("max");
-
-    signals.class       && escape(signals.class);
-    signals.className   && escape(signals.className);
-
-    const value =
-        leases.value !== undefined
-        ? Math.min(100, Math.max(0, Number(leases.value)))
-        : 0;
+    (() => 
+        (
+            inputSignal.primary      && progressbar.color(`[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-blue-500 [&::-webkit-progress-value]:bg-blue-500`),
+            inputSignal.success      && progressbar.color(`[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-green-500 [&::-webkit-progress-value]:bg-green-500`),
+            inputSignal.danger       && progressbar.color(`[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-red-500 [&::-webkit-progress-value]:bg-red-500`),
+            inputSignal.neutral      && progressbar.color(`[&::-webkit-progress-bar]:bg-slate-300 [&::-moz-progress-bar]:bg-gray-500 [&::-webkit-progress-value]:bg-gray-500`),
+            inputSignal.transparent  && progressbar.color(`[&::-webkit-progress-bar]:bg-transparent [&::-moz-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-transparent`)
+        )
+    )(),
+  /* ────────────────────────────────────────────────────────────────────────────
+   * SIZE SIGNALS
+   * ──────────────────────────────────────────────────────────────────────────── */
+    (() => 
+        (
+            inputSignal.sm           && progressbar.size("h-1 w-16"),
+            inputSignal.md           && progressbar.size("h-2 w-32"),
+            inputSignal.lg           && progressbar.size("h-3 w-48"),
+            inputSignal.xl           && progressbar.size("h-4 w-64"),
+            inputSignal.responsive   && progressbar.size("h-2 w-full")
+        )
+    )(),
+  /* ────────────────────────────────────────────────────────────────────────────
+   * LAYOUT SIGNALS
+   * ──────────────────────────────────────────────────────────────────────────── */
+    (() => 
+        (
+            inputSignal.inline       && progressbar.layout("inline-block"),
+            inputSignal.block        && progressbar.layout("block"),
+            inputSignal.centered     && progressbar.layout("mx-auto")
+        )
+    )(),
+  /* ────────────────────────────────────────────────────────────────────────────
+   * DATA
+   * ──────────────────────────────────────────────────────────────────────────── */
+    (() => 
+        (
+            inputSignal.value       && data("value"),
+            inputSignal.max         && data("max")
+        )
+    )();
+    const value = dataSignal.value !== undefined ? Math.min(100, Math.max(0, Number(dataSignal.value))) : 0;
   /* ────────────────────────────────────────────────────────────────────────────
    * RENDER
    * ──────────────────────────────────────────────────────────────────────────── */
-
   return (
     <progress
       value={value}
-      max={leases.max ?? 100}
-      className={Object.values(signalLayers)
+      max={dataSignal.max ?? 100}
+      className={Object.values(layerSignal)
         .map(l => l[0])
         .filter(Boolean)
         .join(" ")}
