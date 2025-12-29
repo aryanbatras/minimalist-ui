@@ -6,3 +6,4 @@ export { Dropdown } from "./src/Dropdown.jsx";
 export { FabMenu } from "./src/FabMenu.jsx";
 export { Slider } from "./src/Slider.jsx";
 export { TextField } from "./src/TextField.jsx";
+export { CheckBox } from "./src/CheckBox.jsx";
