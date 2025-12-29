@@ -1,13 +1,10 @@
-import { Slider } from "signal-layers";
+import { TextField } from "signal-layers";
+import { useState } from "react";
 
 export default function App() {
   return (
-    <div className="items-center justify-center flex h-screen w-screen p-8">
-        {/* <Slider sm danger min={100} max={200} /> */}
-        {/* <Slider min={100} max={200} step={25} square/> */}
-        <Slider defaultValue={50} onChange={(v) => console.log(v)} bubbleXl bubbleCircle />
+    <div className="items-center justify-center flex h-screen w-screen gap-2 p-8">
+
     </div>
-  );
+  );    
 }
-
-
