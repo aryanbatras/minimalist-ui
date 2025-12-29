@@ -4,3 +4,4 @@ export { Spinner } from "./src/Spinner.jsx";
 export { ProgressBar } from "./src/ProgressBar.jsx";
 export { Dropdown } from "./src/Dropdown.jsx";
 export { FabMenu } from "./src/FabMenu.jsx";
+export { Slider } from "./src/Slider.jsx";
