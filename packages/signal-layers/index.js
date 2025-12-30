@@ -7,3 +7,4 @@ export { FabMenu } from "./src/FabMenu.jsx";
 export { Slider } from "./src/Slider.jsx";
 export { TextField } from "./src/TextField.jsx";
 export { CheckBox } from "./src/CheckBox.jsx";
+export { Switch } from "./src/Switch.jsx";

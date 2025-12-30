@@ -3,7 +3,7 @@ import { useState } from "react";
 export function CheckBox(contract = {}) {
 
   const [inputSignal, layerSignal, dataSignal, stateSignal] = [{ ...contract }, {}, {}, {}];
-  const checkboxId = `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+  const checkboxId = `checkbox-${Math.random().toString(36).substring(2, 9)}`;
 
   const layer = (name, scope = "checkbox") => (className) =>
     (layerSignal[scope] ||= {},
