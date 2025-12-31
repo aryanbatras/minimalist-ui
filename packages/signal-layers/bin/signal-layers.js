@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const componentsDir = join(__dirname, '../src');
-const targetDir = join(process.cwd(), 'src/components/signals');
+const targetDir = join(process.cwd(), 'src/components/signal');
 
 function ensureDir(dir) {
   if (!existsSync(dir)) {

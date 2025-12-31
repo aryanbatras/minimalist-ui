@@ -48,6 +48,11 @@ export function Homepage(){
         </div>
     </div> 
 
+
+    {/* Hero concept: Split screen showing the problem/solution */}
+
+
+
     {/* Footer Section */}
     <div className="h-10 w-full flex flex-row items-center justify-center gap-2">
         <p className="text-xs font-light">2025</p>
