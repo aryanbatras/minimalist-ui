@@ -129,44 +129,44 @@ const buttonProps = {
         {/* Navigation Bar */}
         <div className="h-16 w-full flex flex-row items-center justify-end px-4 py-4 gap-2 bg-gray-300">
             <div className="flex flex-row items-center justify-center gap-6">
-                <p className="text-md font-normal cursor-pointer hover:text-gray-500">Docs</p>
-                <p className="text-md font-normal cursor-pointer hover:text-gray-500">Components</p>
+                <p className="text-lg font-normal cursor-pointer hover:text-gray-500">Docs</p>
+                <p className="text-lg font-normal cursor-pointer hover:text-gray-500">Components</p>
                 <FaGithub className="h-auto w-6 cursor-pointer hover:text-gray-500"/>
             </div>
         </div>
-        
+
         {/* Hero Section */}
         <div className="min-h-screen min-w-screen p-16 flex flex-col items-center justify-center gap-6 bg-gray-300">
             
             
-            <h1 className="text-4xl font-bold">Signal UI</h1>
-            <p className="text-lg pb-8">Simple. Clean. Intent-driven.</p>    
+            <h1 className="text-5xl lg:text-9xl font-bold">Signal UI</h1>
+            <p className="text-2xl pb-8">Simple. Clean. Intent-driven.</p>    
 
                 {/* Code Block */}
             <div className=" bg-black/80 h-20 w-84 rounded-md relative cursor-pointer flex items-center justify-center" onClick={handleCodeClick}>
                 <div className="h-2 w-2 bg-red-500/50 rounded-full absolute top-1 left-1 hover:bg-red-500"></div>
                 <div className="h-2 w-2 bg-yellow-500/50 rounded-full absolute top-1 left-4 hover:bg-yellow-500"></div>
                 <div className="h-2 w-2 bg-green-500/50 rounded-full absolute top-1 left-7 hover:bg-green-500"></div>
-                <div className="font-mono text-md text-white/90 ">npx signal-layers copy</div>
+                <div className="font-mono text-lg text-white/90 ">npx signal-layers copy</div>
                 {copyCodeToggle && (
                         <>
-                            <div className="absolute -top-10 text-white bg-green-600 px-2 py-1 rounded-md font-extralight text-sm">Copied!</div>
+                            <div className="absolute -top-10 text-white bg-green-600 px-2 py-1 rounded-md font-extralight text-base">Copied!</div>
                             <IoMdArrowDropdown className="absolute -top-4 h-6 w-6 text-green-600" />
                         </>
                     )
                 }
             </div>
 
-                    <div className="flex flex-col items-center justify-around gap-4">
+                    <div className="flex flex-col items-center justify-around gap-10">
 
-                        <div>
+                        <div className="pt-6">
                             {'<Button ' + code + ' />'}
                             <span className={`inline-block w-2 h-5 bg-green-400 ml-1 animate-pulse`}></span>
                         </div>
                         
                         <div>
                              <Button {...buttonProps}>
-                                Click Me
+                                Get Started 
                             </Button>
                         </div>
 
@@ -174,33 +174,143 @@ const buttonProps = {
 
         </div>
 
+        {/* What is Signal UI Section */}
         <div className="min-h-screen min-w-screen p-8 bg-gray-300 flex flex-col items-center justify-start">
-            <h1 className="text-3xl lg:text-6xl pb-6">The Idea Behind Signal UI</h1>
+            <h1 className="text-4xl lg:text-8xl pb-6">What is Signal UI</h1>
 
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4 ">A component should be infinitely customisable with a single line of code without breaking any existing component functionality while piling up your ideas in the component file that you can freely use with intent.</p>
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                Signal UI is a component library where you own the code. Copy once, customize forever. No dependencies, no version conflicts, no documentation hunting.
+            </p>
 
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">A component should be based on the idea of intention. If I want a large button with a ripple effect, I just tell it that. No props, no variants, no confusion. The component knows what you mean. You express your intent, and the component delivers.</p>
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                Components understand intent, not configuration. You don't pass props or variants. You tell the component what you want: `primary lg hoverGlow`. It responds accordingly.
+            </p>
 
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">Each component should have the idea of dimensions. Since every dimension has infinite variations of intent. An intent knows which dimensions to affect. These dimensions define the visual and behavioral characteristics of the component. For example, a button's size, color, border style, and animation can all be controlled through different dimensions.</p>
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                Each component has dimensions—tone, size, shape, interaction. Signals group these dimensions into meaningful intent. A signal can affect one dimension or multiple at once.
+            </p>
 
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">These dimensions can be organized into layers. Since a single dimension or a group of dimensions can be affected through intent, hence, we call it a signal. Signals will be based on intent and can modify a single dimension or a group of dimensions at once. These signals will be powerful enough to express self-documenting intent while we modify or add dimensions that are being affected through those signals.</p>
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                The file is the documentation. Read the component, understand its capabilities. No external docs, no API references. The code explains itself.
+            </p>
 
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">A component not only needs signals that affects its styling, but it also needs signals for passing data and state down to the internal components. These signals that have a value being passed will be called data signals. Data signals carry information down to child components. And those signals where state is being handled internally will be called as state signals. State signals will allow components to manage their own internal reactive state while maintaining clean separation of concerns.</p>
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                This isn't another abstraction layer. It's not just copy-paste components. It's the middle ground: semantic intent that you completely own.
+            </p>
 
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">The component should be freely owned by the developer so that they could modify it at first as per their website's styling before using them. No developer should use components as they are and should customize them completely at first hand. They should be able to adapt to their website's design system. Therefore, the component should be designed such that it can be easily customized by removing or adding the signals.</p> 
-
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">To reduce the time spent creating components from scratch, Signal UI will provide pre-built, highly customizable components that can be easily adapted to any design system. Developers can edit once in seconds and use them freely.</p>
-
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">Developers often end up making similar looking websites with the same provided components with limited configurations. We will design it in a such way that every developer can easily customize it within seconds according to their needs without breaking existing ui.</p>
-
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">There can be infinite variations and signals for independent dimensions the same way as tailwind css. However, tailwind css cannot group these dimensions together because it's based on utility classes rather than semantic signals. Signal UI will address this by allowing developers to group related dimensions into meaningful signals that express intent clearly.</p>
-
-            <p className="text-lg max-w-xl lg:max-w-3xl lg:text-2xl text-justify pb-4">Unlike other UI libraries which either has a complete abstraction layer with dependency code not only with node_packages but also with their documentation to look for different props or another approach where code is completely copyable and ownable however is extremely complex to understand or modify. Signal UI on the other hand will take a middle approach with no dependency on packages and having a simple to understand self-documenting code that is easily ownable and configurable for all use cases.</p>
+            <div className="mt-12 max-w-4xl">
+                <h3 className="text-3xl font-bold mb-6 text-center">How it Works</h3>
+                <div className="space-y-6">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                        <h4 className="text-2xl font-bold mb-3">1. Copy</h4>
+                        <p className="text-lg lg:text-xl">Run one command. The component file is now in your project.</p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                        <h4 className="text-2xl font-bold mb-3">2. Customize</h4>
+                        <p className="text-lg lg:text-xl">Add signals, remove signals, modify behavior. The file is yours.</p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                        <h4 className="text-2xl font-bold mb-3">3. Use</h4>
+                        <p className="text-lg lg:text-xl">Express intent through signals. No documentation needed.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        
 
-    
-        {/* Features Section */}
+        {/* Key Differentiators Section */}
+        <div className="min-h-screen min-w-screen p-8 bg-gray-300 flex flex-col items-center justify-start">
+            <h1 className="text-4xl lg:text-8xl pb-6">Why Signal UI is Different</h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                    <h3 className="text-2xl font-bold mb-4">No Dependency Hell</h3>
+                    <p className="text-xl text-justify">Copy once, own forever. No package updates, version conflicts, or breaking changes. The code is yours to keep and modify.</p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                    <h3 className="text-2xl font-bold mb-4">No Variant Explosion</h3>
+                    <p className="text-xl text-justify">Intent-driven signals instead of endless enums. No more digging through docs to find the right combination of props.</p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                    <h3 className="text-2xl font-bold mb-4">No Documentation Hunting</h3>
+                    <p className="text-xl text-justify">Self-documenting code that reads like natural language. The component tells you what it can do.</p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                    <h3 className="text-2xl font-bold mb-4">No Design Lock-in</h3>
+                    <p className="text-xl text-justify">Adapt to any design system in seconds. Remove signals, add new ones, or modify existing behavior without breaking anything.</p>
+                </div>
+            </div>
+
+            <div className="mt-12 max-w-4xl">
+                <h3 className="text-3xl font-bold mb-6 text-center">The Perfect Balance</h3>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 border border-white/20">
+                    <table className="w-full text-sm">
+                        <thead>
+                            <tr className="border-b border-white/20">
+                                <th className="text-left pb-4 text-sm">Approach</th>
+                                <th className="text-center pb-4 pr-1 text-sm">Abstraction</th>
+                                <th className="text-center pb-4 pr-1 text-sm">Ownership</th>
+                                <th className="text-center pb-4 text-sm">Customization</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className="border-b border-white/10">
+                                <td className="py-2 text-sm">Traditional UI Libraries</td>
+                                <td className="text-center py-2 pr-1 text-sm lg:text-3xl lg:py-4">High</td>
+                                <td className="text-center py-2 pr-1 text-sm  lg:text-3xl lg:py-4">Low</td>
+                                <td className="text-center py-2 text-sm lg:text-3xl lg:py-4">Limited</td>
+                            </tr>
+                            <tr className="border-b border-white/10">
+                                <td className="py-2 text-sm">Copyable Components</td>
+                                <td className="text-center py-2 pr-1 text-sm lg:text-3xl lg:py-4">Low</td>
+                                <td className="text-center py-2 pr-1 text-sm lg:text-xl lg:py-4">High</td>
+                                <td className="text-center py-2 text-sm lg:py-4 lg:text-xl">Complex</td>
+                            </tr>
+                            <tr>
+                                <td className="py-2 font-bold text-sm">Signal UI</td>
+                                <td className="text-center py-2 pr-1 text-sm lg:text-xl lg:py-4">Balanced</td>
+                                <td className="text-center py-2 pr-1 text-sm lg:text-xl lg:py-4">Full</td>
+                                <td className="text-center py-2 text-sm lg:text-xl lg:py-4">Simple</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div className="min-h-screen min-w-screen p-8 bg-gray-300 flex flex-col items-center justify-start">
+            <h1 className="text-4xl lg:text-8xl pb-6">The Idea Behind Signal UI</h1>
+
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                I started Signal UI because I was tired of choosing between two bad options: either get locked into someone else's design system with endless configuration, or copy-paste components so complex you're afraid to touch them. There had to be a better way.
+            </p>
+
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                The breakthrough was realizing that components should understand intent, not configuration. When I want a large button with a ripple effect, I should just say that. No digging through docs for the right prop combination, no wrestling with variant systems. The component should know what I mean because I'm speaking its language.
+            </p>
+
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                This led to the concept of signals—simple, declarative expressions of intent that map directly to visual and behavioral dimensions. A signal like `primary lg hoverGlow` isn't just a string of classes; it's a conversation with your component. Each signal targets specific dimensions—tone, size, interaction—and they work together without conflicts or complexity.
+            </p>
+
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                But signals aren't just about styling. They're about ownership. When you copy a Signal UI component, you're not getting a black box—you're getting a starting point. The file becomes yours. You can remove signals, add new ones, or modify existing behavior. The component adapts to your design system, not the other way around.
+            </p>
+
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                This is where we diverge from both traditional UI libraries and utility-first approaches. Traditional libraries give you power but take away ownership. Utility classes give you ownership but no semantic meaning. Signal UI gives you both—semantic intent signals that you own completely, with zero dependencies and no hidden magic.
+            </p>
+
+            <p className="text-xl max-w-xl lg:max-w-3xl lg:text-3xl text-justify pb-4">
+                The result is something that feels like it should have always existed: components that are simple enough to understand in seconds, powerful enough for production use, and flexible enough to become truly yours. No documentation required, no build process needed, no vendor lock-in. Just clean, intentional code that does exactly what you tell it to do.
+            </p>
+        </div>
+
+        {/* Features Section
         <div className="min-h-screen min-w-screen p-8 flex flex-col items-center justify-center gap-4 bg-gray-300">
             <div className="grid grid-cols-2 gap-8 w-full px-8 py-8 md:px-16 lg:px-24 xl:px-32 bg-red-500/50">
                 <div className="bg-white/50 p-4 rounded-md flex flex-col items-center justify-start gap-2 overflow-hidden">
@@ -220,10 +330,10 @@ const buttonProps = {
                     <p className="text-xs font-light text-center wrap-break-word overflow-hidden">Card Description</p>
                 </div>
             </div>
-        </div> 
+        </div>  */}
 
         {/* Footer Section */}
-        <div className="h-10 w-full flex flex-row items-center justify-center gap-2">
+        <div className="h-10 w-full flex flex-row items-center justify-center gap-2 bg-gray-300">
             <p className="text-xs font-light">2025</p>
             <p className="text-xs font-light">Signal UI</p>
         </div>

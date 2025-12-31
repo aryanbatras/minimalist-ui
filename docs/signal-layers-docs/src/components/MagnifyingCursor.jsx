@@ -11,8 +11,8 @@ export function MagnifyingCursor(){
     }, [])
     return (
         <div 
-            className="absolute z-50 h-16 w-16 rounded-full bg-white/30 pointer-events-none opacity-90 blur-xs"
-            style={{ transform: `translate(${pos.x - 32}px, ${pos.y - 32}px)`}}
+            className="absolute z-50 h-32 w-32 rounded-full bg-white/30 pointer-events-none opacity-90 blur-xs"
+            style={{ transform: `translate(${pos.x - 64}px, ${pos.y - 64}px)`}}
         >
         </div>
     );

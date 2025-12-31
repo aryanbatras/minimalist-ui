@@ -119,30 +119,12 @@ export function Button(contract = {}) {
   inputSignal.pill && btn.shape("rounded-full");
   inputSignal.circle && btn.shape("rounded-full aspect-square p-0");
 
-  inputSignal.sizeXs && (
-    btn.size("px-2 py-1"),
-    btn.textSize("text-xs")
-  );
-  inputSignal.sizeSm && (
-    btn.size("px-3 py-1.5"),
-    btn.textSize("text-sm")
-  );
-  inputSignal.sizeMd && (
-    btn.size("px-4 py-2"),
-    btn.textSize("text-base")
-  );
-  inputSignal.sizeLg && (
-    btn.size("px-6 py-3"),
-    btn.textSize("text-lg")
-  );
-  inputSignal.sizeXl && (
-    btn.size("px-8 py-4"),
-    btn.textSize("text-xl")
-  );
-  inputSignal.size2xl && (
-    btn.size("px-10 py-5"),
-    btn.textSize("text-2xl")
-  );
+  inputSignal.xs && (btn.size("px-2 py-1"),btn.textSize("text-xs"));
+  inputSignal.sm && (btn.size("px-3 py-1.5"),btn.textSize("text-sm"));
+  inputSignal.md && (btn.size("px-4 py-2"),btn.textSize("text-base"));
+  inputSignal.lg && (btn.size("px-6 py-3"),btn.textSize("text-lg"));
+  inputSignal.xl && (btn.size("px-8 py-4"),btn.textSize("text-xl"));
+  inputSignal['2xl'] && (btn.size("px-10 py-5"),btn.textSize("text-2xl"));
   inputSignal.wAuto && btn.size("w-auto");
   inputSignal.wFull && btn.size("w-full");
   inputSignal.wFit && btn.size("w-fit");
@@ -180,6 +162,387 @@ export function Button(contract = {}) {
   inputSignal.aspectVideo && btn.shape("aspect-video");
   inputSignal.aspect4_3 && btn.shape("aspect-4/3");
   inputSignal.aspect16_9 && btn.shape("aspect-video");
+
+  inputSignal.glass && (
+    btn.color("bg-white/10 backdrop-blur-md border border-white/20 text-black"),
+    btn.shadow("shadow-lg shadow-black/10"),
+    btn.hover("hover:bg-white/20 hover:shadow-xl hover:shadow-black/20"),
+    btn.active("active:bg-white/30 active:shadow-inner"),
+    btn.animation("transition-all duration-300")
+  );
+  
+  inputSignal.glassDark && (
+    btn.color("bg-black/10 backdrop-blur-md border border-white/10 text-black"),
+    btn.shadow("shadow-lg shadow-black/30"),
+    btn.hover("hover:bg-black/20 hover:shadow-xl hover:shadow-black/40"),
+    btn.active("active:bg-black/30 active:shadow-inner"),
+    btn.animation("transition-all duration-300")
+  );
+
+  inputSignal.gradientPrimary && (
+    btn.color("bg-blue-600 text-white"),
+    btn.shadow("shadow-md shadow-blue-500/30"),
+    btn.hover("hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/40"),
+    btn.active("active:bg-blue-800"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.gradientSunset && (
+    btn.color("bg-orange-500 text-white"),
+    btn.shadow("shadow-md shadow-orange-500/30"),
+    btn.hover("hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/40"),
+    btn.active("active:bg-orange-700"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.gradientOcean && (
+    btn.color("bg-cyan-600 text-white"),
+    btn.shadow("shadow-md shadow-cyan-500/30"),
+    btn.hover("hover:bg-cyan-700 hover:shadow-lg hover:shadow-cyan-500/40"),
+    btn.active("active:bg-cyan-800"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.gradientForest && (
+    btn.color("bg-green-600 text-white"),
+    btn.shadow("shadow-md shadow-green-500/30"),
+    btn.hover("hover:bg-green-700 hover:shadow-lg hover:shadow-green-500/40"),
+    btn.active("active:bg-green-800"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.bright && (
+    btn.color("bg-yellow-400 text-gray-900"),
+    btn.shadow("shadow-md shadow-yellow-500/30"),
+    btn.hover("hover:bg-yellow-500 hover:shadow-lg hover:shadow-yellow-500/40"),
+    btn.active("active:bg-yellow-600"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.deep && (
+    btn.color("bg-indigo-600 text-white"),
+    btn.shadow("shadow-md shadow-indigo-500/30"),
+    btn.hover("hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/40"),
+    btn.active("active:bg-indigo-800"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.calm && (
+    btn.color("bg-teal-500 text-white"),
+    btn.shadow("shadow-md shadow-teal-500/30"),
+    btn.hover("hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/40"),
+    btn.active("active:bg-teal-700"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.smooth && (
+    btn.color("bg-gray-100 text-gray-800 border border-gray-300"),
+    btn.shadow("shadow-sm shadow-gray-300/50"),
+    btn.hover("hover:bg-gray-200 hover:shadow-md hover:shadow-gray-400/60"),
+    btn.active("active:bg-gray-300"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.clean && (
+    btn.color("bg-white text-gray-900 border border-gray-200"),
+    btn.shadow("shadow-sm shadow-gray-200/50"),
+    btn.hover("hover:bg-gray-50 hover:shadow-md hover:shadow-gray-300/60"),
+    btn.active("active:bg-gray-100"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.bounceIn && (
+    btn.animation("transition-all duration-300"),
+    btn.hover("hover:animate-bounce hover:scale-105"),
+    btn.active("active:scale-90")
+  );
+
+  inputSignal.slideIn && (
+    btn.animation("transition-all duration-300 transform translate-x-0"),
+    btn.hover("hover:translate-x-2 hover:scale-105"),
+    btn.active("active:translate-x-1 active:scale-95")
+  );
+
+  inputSignal.slideUp && (
+    btn.animation("transition-all duration-200 transform"),
+    btn.hover("hover:-translate-y-1 hover:scale-105"),
+    btn.active("active:translate-y-0 active:scale-95")
+  );
+
+  inputSignal.zoom && (
+    btn.animation("transition-all duration-200"),
+    btn.hover("hover:scale-110"),
+    btn.active("active:scale-90")
+  );
+
+  inputSignal.rotate && (
+    btn.animation("transition-all duration-200"),
+    btn.hover("hover:rotate-3 hover:scale-105"),
+    btn.active("active:rotate-0 active:scale-95")
+  );
+
+  inputSignal.pulseGlow && (
+    btn.animation("transition-all duration-300"),
+    btn.hover("hover:animate-pulse hover:shadow-lg hover:shadow-blue-500/50"),
+    btn.active("active:shadow-xl active:shadow-blue-600/70")
+  );
+
+  inputSignal.magnetic && (
+    btn.animation("transition-all duration-200"),
+    btn.hover("hover:scale-110 hover:rotate-3 hover:shadow-xl hover:shadow-purple-500/40"),
+    btn.active("active:scale-95 active:rotate-0")
+  );
+
+  inputSignal.liquid && (
+    btn.animation("transition-all duration-500"),
+    btn.hover("hover:scale-105 hover:skewX-3 hover:shadow-lg hover:shadow-cyan-500/30"),
+    btn.active("active:scale-95 active:skewX-0")
+  );
+
+  inputSignal.elastic && (
+    btn.animation("transition-all duration-700"),
+    btn.hover("hover:scale-125 hover:shadow-xl hover:shadow-green-500/40"),
+    btn.active("active:scale-75 active:shadow-lg active:shadow-green-600/50")
+  );
+
+  inputSignal.wobble && (
+    btn.animation("transition-all duration-300"),
+    btn.hover("hover:animate-pulse hover:rotate-6 hover:scale-105"),
+    btn.active("active:rotate-0 active:scale-95")
+  );
+
+  inputSignal.gentle && (
+    btn.color("bg-blue-50 text-blue-800 border border-blue-200"),
+    btn.shadow("shadow-sm shadow-blue-200/30"),
+    btn.hover("hover:bg-blue-100 hover:shadow-md hover:shadow-blue-300/40"),
+    btn.active("active:bg-blue-200"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.warm && (
+    btn.color("bg-orange-50 text-orange-800 border border-orange-200"),
+    btn.shadow("shadow-sm shadow-orange-200/30"),
+    btn.hover("hover:bg-orange-100 hover:shadow-md hover:shadow-orange-300/40"),
+    btn.active("active:bg-orange-200"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.cool && (
+    btn.color("bg-cyan-50 text-cyan-800 border border-cyan-200"),
+    btn.shadow("shadow-sm shadow-cyan-200/30"),
+    btn.hover("hover:bg-cyan-100 hover:shadow-md hover:shadow-cyan-300/40"),
+    btn.active("active:bg-cyan-200"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.minimalist && (
+    btn.color("bg-white text-gray-900 border border-gray-300"),
+    btn.shadow("shadow-sm shadow-gray-200/50"),
+    btn.hover("hover:bg-gray-50 hover:border-gray-400 hover:shadow-md hover:shadow-gray-300/70"),
+    btn.active("active:bg-gray-100 active:scale-95"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.shine && (
+    btn.color("bg-gray-100 text-gray-800"),
+    btn.shadow("shadow-sm shadow-gray-300/30"),
+    btn.hover("hover:bg-gray-200 hover:shadow-md hover:shadow-gray-400/50"),
+    btn.active("active:bg-gray-300"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.fresh && (
+    btn.color("bg-green-50 text-green-800"),
+    btn.shadow("shadow-sm shadow-green-300/30"),
+    btn.hover("hover:bg-green-100 hover:shadow-md hover:shadow-green-400/50"),
+    btn.active("active:bg-green-200"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.depth && (
+    btn.color("bg-white text-gray-900 border border-gray-200"),
+    btn.shadow("shadow-sm shadow-gray-300/50"),
+    btn.hover("hover:bg-gray-50 hover:shadow-lg hover:shadow-gray-400/60 hover:-translate-y-1"),
+    btn.active("active:shadow-inner active:translate-y-0"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.plush && (
+    btn.color("bg-purple-100 text-purple-800"),
+    btn.shadow("shadow-md shadow-purple-300/40"),
+    btn.hover("hover:bg-purple-200 hover:shadow-lg hover:shadow-purple-400/50"),
+    btn.active("active:bg-purple-300"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.bold && (
+    btn.color("bg-red-600 text-white"),
+    btn.shadow("shadow-md shadow-red-500/30"),
+    btn.hover("hover:bg-red-700 hover:shadow-lg hover:shadow-red-500/40"),
+    btn.active("active:bg-red-800"),
+    btn.animation("transition-all duration-200")
+  );
+
+  inputSignal.sleek && (
+    btn.color("bg-slate-700 text-white"),
+    btn.shadow("shadow-md shadow-slate-600/30"),
+    btn.hover("hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-600/40"),
+    btn.active("active:bg-slate-900"),
+    btn.animation("transition-all duration-200")
+  );
+
+  // Professional Production-Ready Styles
+  inputSignal.apple && (
+    btn.color("bg-blue-500 text-white"),
+    btn.shadow("shadow-sm shadow-blue-500/20"),
+    btn.hover("hover:bg-blue-600 hover:shadow-md hover:shadow-blue-500/30"),
+    btn.active("active:bg-blue-700"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.google && (
+    btn.color("bg-white text-gray-700 border border-gray-300"),
+    btn.shadow("shadow-sm shadow-gray-200/50"),
+    btn.hover("hover:bg-gray-50 hover:shadow-md hover:shadow-gray-300/60"),
+    btn.active("active:bg-gray-100 active:shadow-inner"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.spotify && (
+    btn.color("bg-green-500 text-white"),
+    btn.shadow("shadow-sm shadow-green-500/20"),
+    btn.hover("hover:bg-green-600 hover:shadow-md hover:shadow-green-500/30"),
+    btn.active("active:bg-green-700"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.github && (
+    btn.color("bg-gray-900 text-white"),
+    btn.shadow("shadow-sm shadow-gray-900/20"),
+    btn.hover("hover:bg-gray-800 hover:shadow-md hover:shadow-gray-900/30"),
+    btn.active("active:bg-gray-700"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.slack && (
+    btn.color("bg-purple-600 text-white"),
+    btn.shadow("shadow-sm shadow-purple-500/20"),
+    btn.hover("hover:bg-purple-700 hover:shadow-md hover:shadow-purple-500/30"),
+    btn.active("active:bg-purple-800"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.discord && (
+    btn.color("bg-indigo-600 text-white"),
+    btn.shadow("shadow-sm shadow-indigo-500/20"),
+    btn.hover("hover:bg-indigo-700 hover:shadow-md hover:shadow-indigo-500/30"),
+    btn.active("active:bg-indigo-800"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.twitter && (
+    btn.color("bg-sky-500 text-white"),
+    btn.shadow("shadow-sm shadow-sky-500/20"),
+    btn.hover("hover:bg-sky-600 hover:shadow-md hover:shadow-sky-500/30"),
+    btn.active("active:bg-sky-700"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.linkedin && (
+    btn.color("bg-blue-700 text-white"),
+    btn.shadow("shadow-sm shadow-blue-600/20"),
+    btn.hover("hover:bg-blue-800 hover:shadow-md hover:shadow-blue-600/30"),
+    btn.active("active:bg-blue-900"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.facebook && (
+    btn.color("bg-blue-600 text-white"),
+    btn.shadow("shadow-sm shadow-blue-500/20"),
+    btn.hover("hover:bg-blue-700 hover:shadow-md hover:shadow-blue-500/30"),
+    btn.active("active:bg-blue-800"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.amazon && (
+    btn.color("bg-orange-500 text-white"),
+    btn.shadow("shadow-sm shadow-orange-500/20"),
+    btn.hover("hover:bg-orange-600 hover:shadow-md hover:shadow-orange-500/30"),
+    btn.active("active:bg-orange-700"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.netflix && (
+    btn.color("bg-red-600 text-white"),
+    btn.shadow("shadow-sm shadow-red-500/20"),
+    btn.hover("hover:bg-red-700 hover:shadow-md hover:shadow-red-500/30"),
+    btn.active("active:bg-red-800"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.microsoft && (
+    btn.color("bg-gray-700 text-white"),
+    btn.shadow("shadow-sm shadow-gray-600/20"),
+    btn.hover("hover:bg-gray-800 hover:shadow-md hover:shadow-gray-600/30"),
+    btn.active("active:bg-gray-900"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.adobe && (
+    btn.color("bg-red-700 text-white"),
+    btn.shadow("shadow-sm shadow-red-600/20"),
+    btn.hover("hover:bg-red-800 hover:shadow-md hover:shadow-red-600/30"),
+    btn.active("active:bg-red-900"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.dropbox && (
+    btn.color("bg-blue-600 text-white"),
+    btn.shadow("shadow-sm shadow-blue-500/20"),
+    btn.hover("hover:bg-blue-700 hover:shadow-md hover:shadow-blue-500/30"),
+    btn.active("active:bg-blue-800"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.airbnb && (
+    btn.color("bg-pink-500 text-white"),
+    btn.shadow("shadow-sm shadow-pink-500/20"),
+    btn.hover("hover:bg-pink-600 hover:shadow-md hover:shadow-pink-500/30"),
+    btn.active("active:bg-pink-700"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.uber && (
+    btn.color("bg-black text-white"),
+    btn.shadow("shadow-sm shadow-black/20"),
+    btn.hover("hover:bg-gray-800 hover:shadow-md hover:shadow-black/30"),
+    btn.active("active:bg-gray-700"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.paypal && (
+    btn.color("bg-blue-700 text-white"),
+    btn.shadow("shadow-sm shadow-blue-600/20"),
+    btn.hover("hover:bg-blue-800 hover:shadow-md hover:shadow-blue-600/30"),
+    btn.active("active:bg-blue-900"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.stripe && (
+    btn.color("bg-purple-700 text-white"),
+    btn.shadow("shadow-sm shadow-purple-600/20"),
+    btn.hover("hover:bg-purple-800 hover:shadow-md hover:shadow-purple-600/30"),
+    btn.active("active:bg-purple-900"),
+    btn.animation("transition-all duration-150")
+  );
+
+  inputSignal.shopify && (
+    btn.color("bg-green-600 text-white"),
+    btn.shadow("shadow-sm shadow-green-500/20"),
+    btn.hover("hover:bg-green-700 hover:shadow-md hover:shadow-green-500/30"),
+    btn.active("active:bg-green-800"),
+    btn.animation("transition-all duration-150")
+  );
 
   inputSignal.hoverEnlarge && btn.hover("hover:scale-105");
   inputSignal.hoverShrink && btn.hover("hover:scale-95");
