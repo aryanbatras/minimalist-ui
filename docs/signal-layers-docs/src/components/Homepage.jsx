@@ -2,7 +2,6 @@ import { FaGithub } from "react-icons/fa";
 export function Homepage(){
     return(
     <>
-
     {/* Navigation Bar */}
     <div className="h-16 w-full flex flex-row items-center justify-end px-4 py-4 gap-2 bg-gray-300">
         <div className="flex flex-row items-center justify-center gap-6">

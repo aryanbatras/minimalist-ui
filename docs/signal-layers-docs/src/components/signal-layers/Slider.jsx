@@ -1,3 +1,4 @@
+import { createSignalUtils } from "./";
 export function Slider(contract = {}) {
   const { layer, data, state, classes, signals } = createSignalUtils(contract);
   const { inputSignal, layerSignal, dataSignal, stateSignal } = signals;

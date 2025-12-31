@@ -1,3 +1,4 @@
+import { createSignalUtils } from "./";
 export function Spinner(contract = {}) {
   const { layer, data, state, classes, signals } = createSignalUtils(contract);
   const { inputSignal, layerSignal, dataSignal } = signals;

@@ -1,4 +1,4 @@
-import { Button } from "./";
+import { Button, createSignalUtils } from "./";
 export function Card(contract = {}) {
   const { layer, data, state, classes, signals } = createSignalUtils(contract);
   const { inputSignal, layerSignal, dataSignal } = signals;

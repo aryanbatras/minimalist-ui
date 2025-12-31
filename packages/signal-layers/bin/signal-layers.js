@@ -16,6 +16,44 @@ function ensureDir(dir) {
   }
 }
 
+function copyEssentialFiles() {
+  try {
+    // Always copy index.js
+    const sourceIndex = join(componentsDir, 'index.js');
+    const targetIndex = join(targetDir, 'index.js');
+    
+    if (!existsSync(targetIndex)) {
+      copyFileSync(sourceIndex, targetIndex);
+      console.log(`✓ Added index.js to components/signal-layers/index.js`);
+    } else {
+      console.log(`- Skipped index.js (already exists)`);
+    }
+    
+    // Always copy utils folder
+    const sourceUtilsDir = join(componentsDir, 'utils');
+    const targetUtilsDir = join(targetDir, 'utils');
+    
+    if (existsSync(sourceUtilsDir)) {
+      ensureDir(targetUtilsDir);
+      
+      const utilsFiles = readdirSync(sourceUtilsDir);
+      utilsFiles.forEach(file => {
+        const sourceFile = join(sourceUtilsDir, file);
+        const targetFile = join(targetUtilsDir, file);
+        
+        if (!existsSync(targetFile)) {
+          copyFileSync(sourceFile, targetFile);
+          console.log(`✓ Added utils/${file} to components/signal-layers/utils/${file}`);
+        } else {
+          console.log(`- Skipped utils/${file} (already exists)`);
+        }
+      });
+    }
+  } catch (err) {
+    console.error('Could not copy essential files:', err.message);
+  }
+}
+
 function addComponent(componentName) {
   const sourceFile = join(componentsDir, `${componentName}.jsx`);
   const targetFile = join(targetDir, `${componentName}.jsx`);
@@ -35,6 +73,9 @@ function addComponent(componentName) {
 
   copyFileSync(sourceFile, targetFile);
   console.log(`✓ Added ${componentName} to components/signal-layers/${componentName}.jsx`);
+  
+  // Always copy essential files when adding a component
+  copyEssentialFiles();
 }
 
 function copyAll() {
@@ -56,6 +97,9 @@ function copyAll() {
         console.log(`- Skipped ${componentName} (already exists)`);
       }
     });
+    
+    // Always copy essential files when copying all components
+    copyEssentialFiles();
     
     console.log(`\nInstalled ${components.length} components to components/signal-layers/`);
   } catch (err) {
