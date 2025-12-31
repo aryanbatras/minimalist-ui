@@ -1,312 +1,265 @@
-# Signal UI
+# Signal Layers
 
-Signal UI is a source-first, intent-driven UI system where components are laws, not presets.
-You copy the code. You own it. You change it. The system guides you instead of trapping you.
+A minimalist, intent-driven UI system where components are laws, not presets. You copy the code. You own it. You change it. The system guides you instead of trapping you.
 
-This project exists because modern frontend UI has become over-configured, over-abstracted, and under-owned.
-Signal UI fixes that.
+Signal Layers exists because modern frontend UI has become over-configured, over-abstracted, and under-owned. This library fixes that through a revolutionary signal-based architecture where props are signals of intention, not configuration.
 
-## Getting Started
+## 🚀 Quick Start
 
-Copy components directly into your project with a single command:
+### Prerequisites
+
+**Required Dependencies:**
 
 ```bash
-# Copy all components
-npx signals-ui@latest copy
-
-# Add a specific component
-npx signals-ui@latest add button
+react@>=16.8.0 
+react-dom@>=16.8.0
+tailwindcss@v4
 ```
 
-All components will be copied to your project folder. 
+### Installation & Setup
 
-No dependencies, no lock-in.
+#### Option 1: Copy All Components (Recommended)
+```bash
+npx signal-layers copy
+```
+This copies all components to `src/components/signals/` in your project.
 
-## Why Signal UI Exists
+#### Option 2: Add Specific Components
+```bash
+npx signal-layers add button
+npx signal-layers add card
+npx signal-layers add dropdown
+```
 
-Modern component libraries suffer from the same disease:
+#### Option 3: List Available Components
+```bash
+npx signal-layers list
+```
 
-- Too many variants to remember
-- Configuration APIs instead of language
-- Hidden behavior inside helpers
-- Design systems that scale visually but not mentally
-- Copy-paste culture without understanding
-- "Customizable" components that resist real change
+## 🧠 Architecture
 
-Libraries either:
-- Lock you in, or
-- Leave you alone without structure
+Signal Layers introduces a revolutionary four-signal architecture:
 
-Signal UI does neither.
+### Signal Types
 
-Signal UI gives you structure without ownership loss
-and freedom without chaos
+1. **Input Signals** (`inputSignal`)
+   - Raw props passed to components
+   - User intention for styling
+   - Example: `primary`, `lg`, `onClick`, `disabled`
 
-## Core Philosophy
+2. **Layer Signals** (`layerSignal`)
+   - Mapped CSS classes and styling layers
+   - Visual presentation logic
+   - Example: Maps `primary` → `"bg-blue-500 text-white"`
 
-### 1. Ownership is non-negotiable
+3. **Data Signals** (`dataSignal`)
+   - Processed and validated data
+   - Component state and computed values
+   - Example: Validated form values, computed dimensions
 
-- Components are copied into your project
-- There is no runtime dependency
-- No hidden logic
-- No black boxes
-- Once copied, the code is yours.
-- Signal UI ends the moment the file lands in your repo.
+4. **State Signals** (`stateSignal`)
+   - React hooks for interactivity
+   - Hover, focus, ripple states
+   - Example: `stateSignal.hover.get`, `stateSignal.ripples.set`
 
-### 2. Intent over configuration
+### Signal Resolution Rules
 
-We do not configure components.
-We declare intent.
+- **One signal per layer**: If multiple signals from the same layer are passed, the last one is applied
+- **Deterministic**: No magic, no warnings, predictable behavior
+- **Composable**: Signals can be combined freely
+- **Optional**: All signals are opt-in
+
+## 📦 Available Components
+
+| Component | Description |
+|-----------|-------------|
+| **Button** | Interactive button with ripple effects |
+| **Card** | Content container with layered styling |
+| **CheckBox** | Custom checkbox with animations |
+| **Dropdown** | Select dropdown with keyboard navigation |
+| **FabMenu** | Floating action button menu |
+| **ProgressBar** | Animated progress indicator |
+| **Slider** | Range slider with drag interaction |
+| **Spinner** | Loading spinner animations |
+| **Switch** | Toggle switch with smooth transitions |
+| **TextField** | Input field with validation states |
+
+## 🎯 Usage Examples
+
+### Basic Button
+```jsx
+import { Button } from './components/signals/Button.jsx';
+
+// Simple usage
+<Button onClick={() => console.log('clicked')}>Click me</Button>
+
+// With signals
+<Button primary lg hoverEnlarge>Primary Action</Button>
+
+// Multiple signals
+<Button ghost red sm hoverLift activeShrink>Ghost Button</Button>
+```
+
+### Interactive Components
+```jsx
+import { FabMenu } from './components/signals/FabMenu.jsx';
+
+<FabMenu 
+  icon="+"
+  actions={[
+    { icon: "📝", label: "New Document", onClick: () => {} },
+    { icon: "📁", label: "Open File", onClick: () => {} },
+    { icon: "💾", label: "Save", onClick: () => {} }
+  ]}
+/>
+```
+
+### Form Components
+```jsx
+import { TextField, CheckBox, Switch } from './components/signals';
+
+<TextField placeholder="Enter your name" lg />
+<CheckBox checked={isChecked} onChange={setIsChecked} />
+<Switch on={isEnabled} onChange={setIsEnabled} />
+```
+
+## 🎨 Signal System
+
+### Structural Signals (Identity)
+Define what the component is:
+
+**Tone/Style:** `primary`, `secondary`, `cta`, `ghost`, `neumorphism`
+**Color:** `red`, `green`, `blue`, `yellow`, `purple`
+**Size:** `xs`, `sm`, `md`, `lg`, `xl`
+**Shape:** `square`, `rounded`, `pill`, `circle`
+
+### Behavioral Signals (Interaction)
+Define how it behaves:
+
+**Hover:** `hoverEnlarge`, `hoverShrink`, `hoverLift`, `hoverFade`
+**Active:** `activeShrink`, `activeRipple`, `activeExplode`
+**Effects:** `ripple`, `innerShadow`, `noShadow`
+
+### Layout Signals
+**Display:** `block`, `inline`, `center`
+**Border:** `border`, `noBorder`, `roundedBorder`
+
+## 🔧 Advanced Usage
+
+### Custom Signal Mapping
+Each component contains a signal mapping section where you can customize how signals translate to CSS:
 
 ```jsx
-<Button primary compact hoverMotion />
+// Inside Button.jsx
+const layer = (name, scope = "btn") => (className) =>
+  (layerSignal[scope] ||= {},
+  layerSignal[scope][name] ||= [],
+  (layerSignal[scope][name][0] = className));
+
+// Composite Signal
+  inputSignal.ghost && (
+btn.shape("rounded-full"),
+btn.shadow("shadow-none"),
+btn.color("bg-transparent text-gray-800"),
+btn.hover("hover:scale-110 hover:bg-gray-100/50 hover:text-gray-900"),
+btn.active("active:scale-95 active:bg-gray-100/75 active:text-gray-900"),
+btn.animation("transition-all duration-500 cursor-pointer")
+)
+
+// Individual Signals
+inputSignal.xs      && btn.size("px-2 py-1 text-xs"),
+inputSignal.sm      && btn.size("px-3 py-1.5 text-sm"),
+inputSignal.md      && btn.size("px-4 py-2 text-base"),
+inputSignal.lg      && btn.size("px-6 py-3 text-lg"),
+inputSignal.xl      && btn.size("px-8 py-4 text-xl")
 ```
 
-Not:
+### State Management
+Interactive components use state signals for React hooks:
 
 ```jsx
-<Button variant="primary" size="sm" animation="hover-scale" />
+const state = (name, priority = 0, initial = false) => (
+  (stateSignal._hooks ||= {})[name] ||= (() => {
+    const [get, set] = useState(initial);
+    return { get, set };
+  })(),
+  priority && (!stateSignal._priority || priority > stateSignal._priority) &&
+    (stateSignal[name] = stateSignal._hooks[name], stateSignal._priority = priority)
+);
 ```
 
-Intent is:
-- readable
-- memorable
-- human
+## 🛠️ Development
 
-### 3. Signals are language
-
-A signal is a boolean prop expressing intent.
-
-- No key–value pairs
-- No enums
-- No variants
-- No schemas
-- Presence = meaning.
+### Component Structure
+Each component follows this structure:
 
 ```jsx
-danger
-compact
-hoverMotion
+export function ComponentName(contract = {}) {
+  /* ────────────────────────────────────────────────────────────────────────────
+   * CONTRACT
+   * ──────────────────────────────────────────────────────────────────────────── */
+  const [inputSignal, layerSignal, dataSignal, stateSignal] = [{ ...contract }, {}, {}, {}];
+  
+  /* ────────────────────────────────────────────────────────────────────────────
+   * CONTRACT TOOLS
+   * ──────────────────────────────────────────────────────────────────────────── */
+  const layer = (name, scope = "root") => (className) => { /* ... */ };
+  const data = (name, key = name) => { /* ... */ };
+  const state = (name, priority = 0, initial = false) => { /* ... */ };
+  
+  /* ────────────────────────────────────────────────────────────────────────────
+   * LAYERS
+   * ──────────────────────────────────────────────────────────────────────────── */
+  // Signal mappings here
+  
+  /* ────────────────────────────────────────────────────────────────────────────
+   * RENDER
+   * ──────────────────────────────────────────────────────────────────────────── */
+  return (
+    // JSX with className={classes(layerSignal.root)}
+  );
+}
 ```
 
-Signals do not do anything.
-They are read and interpreted.
+## 📚 Philosophy
 
-### 4. HTML already has state — we respect it
+### Ownership Over Abstraction
+- **Copy, don't import**: Components are copied into your project
+- **No vendor lock-in**: You own the code completely
+- **No hidden logic**: Everything is visible and editable
+- **The file is the product**: Components are self-contained documentation
 
-Signal UI does not re-model state.
-We rely on:
-- semantic elements
-- `:hover`, `:focus-visible`, `:active`
-- keyboard navigation
-- native accessibility
+### Intention Over Configuration
+- **No variant enums**: Use `primary`, not `variant="primary"`
+- **No size schemas**: Use `lg`, not `size="large"`
+- **Signals express intent**: Props describe what you want, not how to configure it
+- **Composable API**: Mix and match signals freely
 
-We listen and style.
-We do not replace.
+### HTML Already Has State
+- **Respect browser behavior**: Use `:hover`, `:focus`, `:active`
+- **Semantic HTML**: Proper elements and accessibility
+- **Keyboard navigation**: Built-in browser support
+- **No re-modeling**: Don't fight the platform
 
-## The Mental Model (Read This Carefully)
+## 🤝 Contributing
 
-Signal UI has a strict conceptual flow.
-This is the entire system.
+Signal Layers follows the "copy and edit" philosophy. To contribute:
 
-### 1️⃣ Signal Contracts (Foundation)
+1. **Copy components** to your project
+2. **Make changes** as needed
+3. **Share improvements** with the community
+4. **No PRs required** - this is a copy-first system
 
-Everything starts with a Signal Contract.
-A contract defines:
-- what the component is
-- what it guarantees
-- what it allows
-- what it forbids
+## 📄 License
 
-A contract:
-- does NOT define styles
-- does NOT define behavior
-- does NOT contain logic
+MIT License - feel free to use, modify, and distribute.
 
-It defines design constraints.
-Think of it as the constitution of a component.
+## 🔗 Links
 
-### 2️⃣ Signal Layers (Responsibility Planes)
+- **GitHub**: https://github.com/aryanbatras/minimalist-ui
+- **Issues**: https://github.com/aryanbatras/minimalist-ui/issues
+- **NPM**: https://www.npmjs.com/package/signal-layers
 
-Contracts declare Signal Layers.
-A layer is a responsibility boundary.
-
-Common layers:
-- Foundation
-- Visual
-- Behavior
-- Composition
-- Accessibility (a11y)
-
-Layers:
-- interpret signals
-- never create intent
-- never talk to each other implicitly
-
-Layers prevent chaos by localizing meaning.
-
-### 3️⃣ Intent Slots (Where meaning is read)
-
-Inside each layer exist Intent Slots.
-An intent slot is:
-- a named place
-- where signals are interpreted
-
-Example:
-- Visual layer → tone slot
-- Behavior layer → motion slot
-
-Slots make files:
-- editable
-- teachable
-- safe to extend
-
-They are designed emptiness.
-
-### 4️⃣ Signals (Boolean only)
-
-Signals are:
-- boolean
-- explicit
-- readable
-- optional
-
-They express what the user wants, not how it's done.
-Signals are not reactive systems.
-They are inputs.
-
-### 5️⃣ Signal Groups (Semantic Compression)
-
-A signal group allows one signal to trigger multiple reactions.
-
-Example:
-```jsx
-danger
-```
-
-Internally:
-- visual layer turns red
-- behavior layer adds feedback
-- a11y layer increases contrast
-
-The user never coordinates this.
-The system does.
-
-### 6️⃣ Shared Signals (For complex systems)
-
-Complex components (Menu, Navbar, Card) may share signals.
-Shared signals:
-- live in separate files
-- remain boolean
-- unify behavior across components
-
-Still:
-- no values
-- no magic
-- no coupling
-
-## Component Structures
-
-Signal UI supports two structures, depending on scale.
-
-### A) Single-file (JS / JSX)
-
-For:
-- solo developers
-- quick prototypes
-- learning
-- small systems
-
-Everything lives in one file.
-The file is the documentation.
-
-### B) Foldered (TS / Enterprise)
-
-For:
-- teams
-- contributors
-- audits
-- long-lived systems
-
-Each component becomes a small system:
-- contract
-- shared signals
-- layers
-- orchestrator
-
-Same philosophy.
-Different organization.
-
-## Extensibility Philosophy
-
-Signal UI does not add features through plugins.
-Extensibility happens through:
-- copying files
-- adding layers
-- editing intent slots
-- introducing new signals
-
-Motion libraries:
-- are optional
-- belong in behavior layers
-- can be replaced or removed
-
-Signal UI never enforces:
-- Framer Motion
-- GSAP
-- Anime.js
-
-It allows them.
-
-## Accessibility Philosophy
-
-Accessibility is:
-- explicit
-- local
-- visible
-
-There is no hidden a11y helper.
-Every component:
-- uses semantic HTML
-- exposes keyboard paths
-- documents its guarantees
-
-This makes accessibility auditable.
-
-## Community & Contribution Model
-
-Signal UI grows horizontally.
-Community contributions are:
-- intent slot implementations
-- signal packs
-- behavior layers
-- examples
-
-Nothing auto-installs.
-Nothing mutates your files.
-You choose what enters your codebase.
-
-## What Signal UI Is NOT
-
-- Not a theme system
-- Not a variant library
-- Not a design kit
-- Not a visual identity
-
-Signal UI does not make apps look unique.
-It makes uniqueness unavoidable.
-
-## Final Definition
-
-Signal UI is a component system built on intent.
-Components are contracts.
-Props are signals.
-Signals are interpreted through layers.
-Layers expose intent slots.
-Code is owned, readable, and changeable.
-Nothing is hidden. Nothing is forced.
-This is not a shortcut.
-This is a foundation.
 
 ## Tailwind CSS Settings for Development
 

@@ -127,6 +127,134 @@ export default function App() {
           </div>
         </section>
 
+        {/* Premium Visual Effects */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Clean Visual Effects</h2>
+          <div className="flex flex-wrap gap-4">
+            <Button glass>Glass</Button>
+            <Button glassDark>Glass Dark</Button>
+            <Button gradientPrimary>Gradient Primary</Button>
+            <Button gradientSunset>Gradient Sunset</Button>
+            <Button gradientOcean>Gradient Ocean</Button>
+            <Button gradientForest>Gradient Forest</Button>
+            <Button bright>Bright</Button>
+            <Button deep>Deep</Button>
+            <Button calm>Calm</Button>
+            <Button smooth>Smooth</Button>
+            <Button clean>Clean</Button>
+          </div>
+        </section>
+
+        {/* Advanced Interactive Effects */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Clean Interactive Effects</h2>
+          <div className="flex flex-wrap gap-4">
+            <Button primary bounceIn>Bounce In</Button>
+            <Button primary slideIn>Slide In</Button>
+            <Button primary slideUp>Slide Up</Button>
+            <Button primary zoom>Zoom</Button>
+            <Button primary rotate>Rotate</Button>
+            <Button primary pulseGlow>Pulse Glow</Button>
+            <Button primary magnetic>Magnetic</Button>
+            <Button primary liquid>Liquid</Button>
+            <Button primary elastic>Elastic</Button>
+            <Button primary wobble>Wobble</Button>
+          </div>
+        </section>
+
+        {/* Clean State Combinations */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Clean State Combinations</h2>
+          <div className="flex flex-wrap gap-4">
+            <Button gentle>Gentle</Button>
+            <Button warm>Warm</Button>
+            <Button cool>Cool</Button>
+            <Button minimalist>Minimalist</Button>
+          </div>
+        </section>
+
+        {/* Clean Micro-interactions */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Clean Micro-interactions</h2>
+          <div className="flex flex-wrap gap-4">
+            <Button shine>Shine</Button>
+            <Button fresh>Fresh</Button>
+            <Button depth>Depth</Button>
+            <Button plush>Plush</Button>
+            <Button bold>Bold</Button>
+            <Button sleek>Sleek</Button>
+          </div>
+        </section>
+
+        {/* Clean Combinations */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Clean Signal Combinations</h2>
+          <div className="flex flex-wrap gap-4">
+            <Button gradientPrimary lg bold>Gradient Primary Large Bold</Button>
+            <Button bright xl bounceIn>Bright XL Bounce</Button>
+            <Button glass md magnetic>Glass Magnetic</Button>
+            <Button deep lg elastic>Deep Elastic</Button>
+            <Button clean slideUp>Clean Slide Up</Button>
+            <Button gentle hoverGlow>Gentle Glow</Button>
+            <Button smooth zoom>Smooth Zoom</Button>
+            <Button fresh rotate>Fresh Rotate</Button>
+            <Button calm depth>Calm Depth</Button>
+            <Button plush liquid>Plush Liquid</Button>
+          </div>
+        </section>
+
+        {/* Professional Production-Ready Styles */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Professional Production Styles</h2>
+          <div className="flex flex-wrap gap-4">
+            <Button apple>Apple</Button>
+            <Button google>Google</Button>
+            <Button spotify>Spotify</Button>
+            <Button github>GitHub</Button>
+            <Button slack>Slack</Button>
+            <Button discord>Discord</Button>
+            <Button twitter>Twitter</Button>
+            <Button linkedin>LinkedIn</Button>
+            <Button facebook>Facebook</Button>
+            <Button amazon>Amazon</Button>
+            <Button netflix>Netflix</Button>
+            <Button microsoft>Microsoft</Button>
+            <Button adobe>Adobe</Button>
+            <Button dropbox>Dropbox</Button>
+            <Button airbnb>Airbnb</Button>
+            <Button uber>Uber</Button>
+            <Button paypal>PayPal</Button>
+            <Button stripe>Stripe</Button>
+            <Button shopify>Shopify</Button>
+          </div>
+        </section>
+
+        {/* Professional Combinations */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Professional Signal Combinations</h2>
+          <div className="flex flex-wrap gap-4">
+            <Button apple lg bold>Apple Large Bold</Button>
+            <Button google md hoverScale>Google Scale</Button>
+            <Button spotify xl bounceIn>Spotify Bounce</Button>
+            <Button github hoverGlow>GitHub Glow</Button>
+            <Button slack slideUp>Slack Slide</Button>
+            <Button discord elastic>Discord Elastic</Button>
+            <Button twitter zoom>Twitter Zoom</Button>
+            <Button linkedin rotate>LinkedIn Rotate</Button>
+            <Button facebook magnetic>Facebook Magnetic</Button>
+            <Button amazon liquid>Amazon Liquid</Button>
+            <Button netflix wobble>Netflix Wobble</Button>
+            <Button microsoft pulseGlow>Microsoft Pulse</Button>
+            <Button adobe depth>Adobe Depth</Button>
+            <Button dropbox slideIn>Dropbox Slide</Button>
+            <Button airbnb bounceIn>Airbnb Bounce</Button>
+            <Button uber hoverEnlarge>Uber Enlarge</Button>
+            <Button paypal slideUp>PayPal Slide</Button>
+            <Button stripe zoom>Stripe Zoom</Button>
+            <Button shopify rotate>Shopify Rotate</Button>
+          </div>
+        </section>
+
       </div>
     </div>
   );

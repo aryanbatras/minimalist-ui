@@ -259,3 +259,17 @@ MIT License - feel free to use, modify, and distribute.
 - **GitHub**: https://github.com/aryanbatras/minimalist-ui
 - **Issues**: https://github.com/aryanbatras/minimalist-ui/issues
 - **NPM**: https://www.npmjs.com/package/signal-layers
+
+
+## Tailwind CSS Settings for Development
+
+To get autocompletion and hover information for the signals,
+add the following to your vscode settings.json :
+
+"tailwindCSS.experimental.classRegex": [
+  ["\\b\\w+\\s*\\(\\s*[\"'`]([^\"'`]*)[\"'`]"]
+]
+
+"tailwindCSS.includePaths": [
+  "${workspaceFolder}/packages/signal-layers/src"
+]
