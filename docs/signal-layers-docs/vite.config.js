@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: '/minimalist-ui/',
   build: {
-    outDir: '../',
+    outDir: 'dist',
     emptyOutDir: true
   }
 })
