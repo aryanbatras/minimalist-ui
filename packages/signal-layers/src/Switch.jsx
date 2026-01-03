@@ -1,3 +1,21 @@
+/**
+ * Switch - Toggle switch with customizable size, shape, and label positioning
+ * 
+ * SIGNALS
+ *   SIZE: xs, sm, md, lg
+ *   SHAPE: square, pill
+ *   LABEL POSITION: labelLeft, labelRight, labelTop, labelBottom, labelHidden
+ *   STATE: disabled
+ * 
+ * DATA PROPS
+ *   REQUIRED: onClick
+ *   OPTIONAL: id, label, name, value, checked, defaultChecked=false, disabled=false, required=false, readOnly=false, aria-label, aria-labelledby, aria-describedby, aria-invalid, aria-checked, className=""
+ * 
+ * DEFAULTS: sm size, pill shape, right label, gray-200 bg, blue-600 checked, white thumb
+ * 
+ * USAGE: <Switch label="Enable notifications" checked={enabled} onChange={setEnabled} /> | <Switch lg square label="Advanced mode" defaultChecked /> | <Switch labelLeft label="Dark theme" checked={darkMode} onChange={setDarkMode} />
+ */
+
 import { createSignalUtils } from "./";
 export function Switch(contract = {}) {    
     const { layer, data, state, classes, signals } = createSignalUtils(contract);
@@ -43,7 +61,7 @@ export function Switch(contract = {}) {
     container.base("relative");
     container.size("h-4 w-8");
     container.color("bg-transparent");
-    container.layout("inline-flex items-center gap-2");
+    container.layout("flex flex-row items-center justify-center gap-2 w-full");
 
     button.base("relative transition-colors duration-500 cursor-pointer");
     button.size("h-4 w-8");
@@ -59,10 +77,15 @@ export function Switch(contract = {}) {
     thumb.layout("inline-block");
     thumb.position("translate-x-0");
 
-    label.base("absolute cursor-pointer whitespace-nowrap");
+    label.base("cursor-pointer shrink-0");
     label.color("text-gray-700");
     label.size("text-sm font-light");
-    label.layout("left-12");
+    
+    inputSignal.labelLeft && label.layout("order-first mr-2");
+    inputSignal.labelRight && label.layout("order-last ml-2");
+    inputSignal.labelTop && (container.layout("flex flex-col-reverse items-center justify-center  gap-2 h-full w-full"), label.layout("w-full text-center"));
+    inputSignal.labelBottom && (container.layout("flex flex-col items-center justify-center gap-2 h-full w-full"), label.layout("w-full text-center"));
+    inputSignal.labelHidden && label.base("absolute opacity-0 pointer-events-none");
 
     inputSignal.xs && (
         container.size("h-3 w-6"), 
@@ -84,15 +107,14 @@ export function Switch(contract = {}) {
         button.size("h-6 w-12"), 
         thumb.size("h-6 w-6")
     )
+    inputSignal.xl && (
+        container.size("h-7 w-14"), 
+        button.size("h-7 w-14"), 
+        thumb.size("h-7 w-7")
+    )
 
     inputSignal.square && (button.shape("rounded-md"), thumb.shape("rounded-md"));
     inputSignal.pill && (button.shape("rounded-full"), thumb.shape("rounded-full"));
-
-    inputSignal.labelLeft && label.layout("right-12 left-auto");
-    inputSignal.labelRight && label.layout("left-12");
-    inputSignal.labelTop && label.layout("bottom-8 left-0 right-0");
-    inputSignal.labelBottom && label.layout("top-8 left-0 right-0");
-    inputSignal.labelHidden && label.base("absolute opacity-0 pointer-events-none");
 
     inputSignal.disabled && (button.interactive("cursor-not-allowed opacity-40"), thumb.interactive("opacity-40"));
 
@@ -110,19 +132,23 @@ export function Switch(contract = {}) {
     inputSignal.ariaDescribedBy && data("aria-describedby");
     inputSignal.ariaInvalid && data("aria-invalid");
     inputSignal.ariaChecked && data("aria-checked");
+    inputSignal.className && data("className");
+    inputSignal.onClick && data("onClick");
 
-    state("checked", 1, false);
-    stateSignal.checked?.get && (
+    state("checked", 1, dataSignal.defaultChecked || false);
+    (stateSignal.checked?.get) && (
         thumb.position("translate-x-4"),
         inputSignal.xs && thumb.position("translate-x-3"),
         inputSignal.sm && thumb.position("translate-x-4"),
         inputSignal.md && thumb.position("translate-x-5"),
         inputSignal.lg && thumb.position("translate-x-6"),
+        inputSignal.xl && thumb.position("translate-x-7"),
         button.color("bg-blue-600")
     );
 
   return (
-     <div className={classes(layerSignal.container)}>
+
+     <div className={`${classes(layerSignal.container)} ${dataSignal.className || ''}`}>
     
         <button
         type="button"
@@ -141,7 +167,11 @@ export function Switch(contract = {}) {
         aria-describedby={dataSignal.ariaDescribedBy}
         aria-invalid={dataSignal.ariaInvalid}
         aria-checked={dataSignal.ariaChecked ?? (dataSignal.checked ?? stateSignal.checked?.get)}
-        onClick={() => stateSignal.checked?.set(!stateSignal.checked?.get)}
+        onClick={(e) => {
+            const v = e.target.checked;
+            stateSignal.checked?.set(!stateSignal.checked?.get); 
+            dataSignal.onClick?.(v);
+        }}
         className={classes(layerSignal.button)}
         >
         
@@ -164,6 +194,7 @@ export function Switch(contract = {}) {
     }
 
   </div>
+  
   )
  
 }

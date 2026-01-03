@@ -1,3 +1,24 @@
+/**
+ * Button - Versatile button with extensive styling and interaction options
+ * 
+ * SIGNALS
+ *   TONE: primary, secondary, outline, link, danger, warning, success, cta, neumorphism, ghost, glass, glassDark, gradientPrimary, gradientSunset, gradientOcean, gradientForest, bright, deep, calm, smooth, clean, gentle, warm, cool, minimalist, shine, fresh, depth, plush, bold, sleek, black, red, green, blue, indigo, yellow, purple, pink, teal, cyan, gray, slate
+ *   SIZE: xs, sm, md, lg, xl, 2xl, 3xl, 4xl
+ *   SHAPE: square, rounded, pill, circle
+ *   TEXT: bold, semibold, light, thin, uppercase, lowercase, capitalize, underline, lineThrough, textXs, textSm, textBase, textLg, textXl, text2xl, textLeft, textCenter, textRight
+ *   ANIMATION: bounceIn, slideIn, slideUp, zoom, rotate, pulseGlow, magnetic, liquid, elastic, wobble, hoverEnlarge, hoverShrink, hoverLift, hoverGlow, hoverRotate, hoverScale, hoverBounce, hoverSpin, hoverNone, activeShrink, activeRipple, activeExplode, activeRotate, activeBounce, activePulse, activeNone, animateSpin, animatePulse, animateBounce, transitionFast, transitionSlow, transitionAll
+ *   STATE: loading, disabled, selected, pressed
+ *   LAYOUT: relative, absolute, fixed, sticky, block, inline, center, flexRow, flexCol, gap1, gap2, gap4
+ * 
+ * DATA PROPS
+ *   REQUIRED: None
+ *   OPTIONAL: children, onClick, type="button", className="", disabled=false, ripple=false, aria-label, aria-haspopup, aria-expanded, onMouseEnter, onMouseLeave
+ * 
+ * DEFAULTS: md size, gray-100 bg, rounded-xs, no border, no shadow, scale-105 hover, flex center, text-sm font-medium
+ * 
+ * USAGE: <Button primary onClick={handleClick}>Save</Button> | <Button danger lg ripple onClick={handleDelete}>Delete</Button> | <Button glass pill lg>Submit</Button>
+ */
+
 import { useRef } from "react";
 import { createSignalUtils } from "./";
 export function Button(contract = {}) {
@@ -30,16 +51,16 @@ export function Button(contract = {}) {
   btn.size("px-4 py-2");
   btn.border("border-0");
   btn.shape("rounded-xs");
-  btn.color("bg-gray-800 text-white");
-  btn.shadow("shadow-xs shadow-black/50");
+  btn.color("bg-gray-100 text-black");
+  btn.shadow("shadow-none");
   btn.text("text-xs font-light font-sans");
   btn.textLayer("text-inherit");
   btn.textWeight("font-medium");
   btn.textSize("text-sm");
   btn.textTransform("normal-case");
   btn.textDecoration("no-underline");
-  btn.hover("hover:scale-105 hover:shadow-md");
-  btn.active("active:scale-90 active:shadow-md");
+  btn.hover("hover:scale-103 hover:shadow-md");
+  btn.active("active:scale-96 active:shadow-md");
   btn.layout("flex items-center justify-center");
   btn.animation("transition-all duration-300 cursor-pointer");
   btn.focus("focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2");
@@ -109,73 +130,19 @@ export function Button(contract = {}) {
     btn.active("active:scale-95 active:bg-gray-100/75 active:text-gray-900"),
     btn.animation("transition-all duration-500 cursor-pointer")
   );
-
-  inputSignal.red && btn.color("bg-red-600 text-white");
-  inputSignal.green && btn.color("bg-green-500 text-white");
-  inputSignal.blue && btn.color("bg-blue-500/90 text-neutral-100");
-
-  inputSignal.square && btn.shape("rounded-none");
-  inputSignal.rounded && btn.shape("rounded-lg");
-  inputSignal.pill && btn.shape("rounded-full");
-  inputSignal.circle && btn.shape("rounded-full aspect-square p-0");
-
-  inputSignal.xs && (btn.size("px-2 py-1"),btn.textSize("text-xs"));
-  inputSignal.sm && (btn.size("px-3 py-1.5"),btn.textSize("text-sm"));
-  inputSignal.md && (btn.size("px-4 py-2"),btn.textSize("text-base"));
-  inputSignal.lg && (btn.size("px-6 py-3"),btn.textSize("text-lg"));
-  inputSignal.xl && (btn.size("px-8 py-4"),btn.textSize("text-xl"));
-  inputSignal['2xl'] && (btn.size("px-10 py-5"),btn.textSize("text-2xl"));
-  inputSignal.wAuto && btn.size("w-auto");
-  inputSignal.wFull && btn.size("w-full");
-  inputSignal.wFit && btn.size("w-fit");
-  inputSignal.wMin && btn.size("w-min");
-  inputSignal.wMax && btn.size("w-max");
-  inputSignal.hAuto && btn.size("h-auto");
-  inputSignal.hFull && btn.size("h-full");
-  inputSignal.hFit && btn.size("h-fit");
-  inputSignal.hMin && btn.size("h-min");
-  inputSignal.hMax && btn.size("h-max");
-
-  inputSignal.block && btn.layout("w-full");
-  inputSignal.inline && btn.layout("inline-flex");
-  inputSignal.center && btn.layout("mx-auto");
-
-  inputSignal.innerShadow && btn.shadow("shadow-inner");
-  inputSignal.noShadow && btn.shadow("shadow-none");
-
-  inputSignal.border && btn.border("border border-gray-800");
-  inputSignal.noBorder && btn.border("border-none");
-  inputSignal.roundedBorder && btn.border("rounded-lg");
-  inputSignal.pillBorder && btn.border("rounded-full");
-  inputSignal.circleBorder && btn.border("rounded-full aspect-square p-0");
-
-  inputSignal.radiusNone && btn.shape("rounded-none");
-  inputSignal.radiusSm && btn.shape("rounded-sm");
-  inputSignal.radius && btn.shape("rounded");
-  inputSignal.radiusMd && btn.shape("rounded-md");
-  inputSignal.radiusLg && btn.shape("rounded-lg");
-  inputSignal.radiusXl && btn.shape("rounded-xl");
-  inputSignal.radius2xl && btn.shape("rounded-2xl");
-  inputSignal.radius3xl && btn.shape("rounded-3xl");
-  inputSignal.radiusFull && btn.shape("rounded-full");
-  inputSignal.aspectSquare && btn.shape("aspect-square");
-  inputSignal.aspectVideo && btn.shape("aspect-video");
-  inputSignal.aspect4_3 && btn.shape("aspect-4/3");
-  inputSignal.aspect16_9 && btn.shape("aspect-video");
-
-  inputSignal.glass && (
+ inputSignal.glass && (
     btn.color("bg-white/10 backdrop-blur-md border border-white/20 text-black"),
-    btn.shadow("shadow-lg shadow-black/10"),
-    btn.hover("hover:bg-white/20 hover:shadow-xl hover:shadow-black/20"),
+    btn.shadow("shadow-sm shadow-black/10"),
+    btn.hover("hover:bg-white/20 hover:shadow-md hover:shadow-black/20"),
     btn.active("active:bg-white/30 active:shadow-inner"),
     btn.animation("transition-all duration-300")
   );
   
   inputSignal.glassDark && (
-    btn.color("bg-black/10 backdrop-blur-md border border-white/10 text-black"),
-    btn.shadow("shadow-lg shadow-black/30"),
-    btn.hover("hover:bg-black/20 hover:shadow-xl hover:shadow-black/40"),
-    btn.active("active:bg-black/30 active:shadow-inner"),
+    btn.color("bg-black/5 backdrop-blur-md border border-white/10 text-black"),
+    btn.shadow("shadow-sm shadow-black/30"),
+    btn.hover("hover:bg-black/10 hover:shadow-md hover:shadow-black/40"),
+    btn.active("active:bg-black/15 active:shadow-inner"),
     btn.animation("transition-all duration-300")
   );
 
@@ -391,190 +358,32 @@ export function Button(contract = {}) {
     btn.animation("transition-all duration-200")
   );
 
-  // Professional Production-Ready Styles
-  inputSignal.apple && (
-    btn.color("bg-blue-500 text-white"),
-    btn.shadow("shadow-sm shadow-blue-500/20"),
-    btn.hover("hover:bg-blue-600 hover:shadow-md hover:shadow-blue-500/30"),
-    btn.active("active:bg-blue-700"),
-    btn.animation("transition-all duration-150")
-  );
+  inputSignal.black && btn.color("bg-black text-white");
+  inputSignal.red && btn.color("bg-red-600 text-white");
+  inputSignal.green && btn.color("bg-green-500 text-white");
+  inputSignal.blue && btn.color("bg-blue-500/90 text-neutral-100");
+  inputSignal.indigo && btn.color("bg-indigo-500 text-white");
+  inputSignal.yellow && btn.color("bg-yellow-400 text-black");
+  inputSignal.purple && btn.color("bg-purple-500 text-white");
+  inputSignal.pink && btn.color("bg-pink-500 text-white");
+  inputSignal.teal && btn.color("bg-teal-500 text-white");
+  inputSignal.cyan && btn.color("bg-cyan-500 text-white");
+  inputSignal.gray && btn.color("bg-gray-500 text-white");
+  inputSignal.slate && btn.color("bg-slate-500 text-white");
 
-  inputSignal.google && (
-    btn.color("bg-white text-gray-700 border border-gray-300"),
-    btn.shadow("shadow-sm shadow-gray-200/50"),
-    btn.hover("hover:bg-gray-50 hover:shadow-md hover:shadow-gray-300/60"),
-    btn.active("active:bg-gray-100 active:shadow-inner"),
-    btn.animation("transition-all duration-150")
-  );
+  inputSignal.square && btn.shape("rounded-none");
+  inputSignal.rounded && btn.shape("rounded-lg");
+  inputSignal.pill && btn.shape("rounded-full");
+  inputSignal.circle && btn.shape("rounded-full aspect-square p-0");
 
-  inputSignal.spotify && (
-    btn.color("bg-green-500 text-white"),
-    btn.shadow("shadow-sm shadow-green-500/20"),
-    btn.hover("hover:bg-green-600 hover:shadow-md hover:shadow-green-500/30"),
-    btn.active("active:bg-green-700"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.github && (
-    btn.color("bg-gray-900 text-white"),
-    btn.shadow("shadow-sm shadow-gray-900/20"),
-    btn.hover("hover:bg-gray-800 hover:shadow-md hover:shadow-gray-900/30"),
-    btn.active("active:bg-gray-700"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.slack && (
-    btn.color("bg-purple-600 text-white"),
-    btn.shadow("shadow-sm shadow-purple-500/20"),
-    btn.hover("hover:bg-purple-700 hover:shadow-md hover:shadow-purple-500/30"),
-    btn.active("active:bg-purple-800"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.discord && (
-    btn.color("bg-indigo-600 text-white"),
-    btn.shadow("shadow-sm shadow-indigo-500/20"),
-    btn.hover("hover:bg-indigo-700 hover:shadow-md hover:shadow-indigo-500/30"),
-    btn.active("active:bg-indigo-800"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.twitter && (
-    btn.color("bg-sky-500 text-white"),
-    btn.shadow("shadow-sm shadow-sky-500/20"),
-    btn.hover("hover:bg-sky-600 hover:shadow-md hover:shadow-sky-500/30"),
-    btn.active("active:bg-sky-700"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.linkedin && (
-    btn.color("bg-blue-700 text-white"),
-    btn.shadow("shadow-sm shadow-blue-600/20"),
-    btn.hover("hover:bg-blue-800 hover:shadow-md hover:shadow-blue-600/30"),
-    btn.active("active:bg-blue-900"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.facebook && (
-    btn.color("bg-blue-600 text-white"),
-    btn.shadow("shadow-sm shadow-blue-500/20"),
-    btn.hover("hover:bg-blue-700 hover:shadow-md hover:shadow-blue-500/30"),
-    btn.active("active:bg-blue-800"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.amazon && (
-    btn.color("bg-orange-500 text-white"),
-    btn.shadow("shadow-sm shadow-orange-500/20"),
-    btn.hover("hover:bg-orange-600 hover:shadow-md hover:shadow-orange-500/30"),
-    btn.active("active:bg-orange-700"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.netflix && (
-    btn.color("bg-red-600 text-white"),
-    btn.shadow("shadow-sm shadow-red-500/20"),
-    btn.hover("hover:bg-red-700 hover:shadow-md hover:shadow-red-500/30"),
-    btn.active("active:bg-red-800"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.microsoft && (
-    btn.color("bg-gray-700 text-white"),
-    btn.shadow("shadow-sm shadow-gray-600/20"),
-    btn.hover("hover:bg-gray-800 hover:shadow-md hover:shadow-gray-600/30"),
-    btn.active("active:bg-gray-900"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.adobe && (
-    btn.color("bg-red-700 text-white"),
-    btn.shadow("shadow-sm shadow-red-600/20"),
-    btn.hover("hover:bg-red-800 hover:shadow-md hover:shadow-red-600/30"),
-    btn.active("active:bg-red-900"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.dropbox && (
-    btn.color("bg-blue-600 text-white"),
-    btn.shadow("shadow-sm shadow-blue-500/20"),
-    btn.hover("hover:bg-blue-700 hover:shadow-md hover:shadow-blue-500/30"),
-    btn.active("active:bg-blue-800"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.airbnb && (
-    btn.color("bg-pink-500 text-white"),
-    btn.shadow("shadow-sm shadow-pink-500/20"),
-    btn.hover("hover:bg-pink-600 hover:shadow-md hover:shadow-pink-500/30"),
-    btn.active("active:bg-pink-700"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.uber && (
-    btn.color("bg-black text-white"),
-    btn.shadow("shadow-sm shadow-black/20"),
-    btn.hover("hover:bg-gray-800 hover:shadow-md hover:shadow-black/30"),
-    btn.active("active:bg-gray-700"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.paypal && (
-    btn.color("bg-blue-700 text-white"),
-    btn.shadow("shadow-sm shadow-blue-600/20"),
-    btn.hover("hover:bg-blue-800 hover:shadow-md hover:shadow-blue-600/30"),
-    btn.active("active:bg-blue-900"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.stripe && (
-    btn.color("bg-purple-700 text-white"),
-    btn.shadow("shadow-sm shadow-purple-600/20"),
-    btn.hover("hover:bg-purple-800 hover:shadow-md hover:shadow-purple-600/30"),
-    btn.active("active:bg-purple-900"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.shopify && (
-    btn.color("bg-green-600 text-white"),
-    btn.shadow("shadow-sm shadow-green-500/20"),
-    btn.hover("hover:bg-green-700 hover:shadow-md hover:shadow-green-500/30"),
-    btn.active("active:bg-green-800"),
-    btn.animation("transition-all duration-150")
-  );
-
-  inputSignal.hoverEnlarge && btn.hover("hover:scale-105");
-  inputSignal.hoverShrink && btn.hover("hover:scale-95");
-  inputSignal.hoverLift && btn.hover("hover:-translate-y-0.5");
-  inputSignal.hoverFade && btn.hover("hover:opacity-40");
-  inputSignal.hoverBorder && btn.hover("hover:border hover:border-black");
-  inputSignal.hoverNone && btn.hover("hover:scale-100 hover:opacity-100");
-  inputSignal.hoverGlow && btn.hover("hover:shadow-lg hover:shadow-blue-500/50");
-  inputSignal.hoverRotate && btn.hover("hover:rotate-3");
-  inputSignal.hoverScale && btn.hover("hover:scale-110");
-  inputSignal.hoverBounce && btn.hover("hover:animate-bounce");
-  inputSignal.hoverPulse && btn.hover("hover:animate-pulse");
-  inputSignal.hoverSpin && btn.hover("hover:animate-spin");
-  inputSignal.hoverPing && btn.hover("hover:animate-ping");
-
-  inputSignal.activeShrink &&
-    btn.active("active:scale-95 transition-transform");
-  inputSignal.activeRipple &&
-    btn.active("active:ring-4 active:ring-black active:scale-90");
-  inputSignal.activeExplode &&
-    btn.active("active:scale-110 active:ring-8 active:ring-black");
-  inputSignal.activeSlide && btn.active("active:translate-x-0.5");
-  inputSignal.activeNone && btn.active("active:scale-100 active:opacity-100");
-  inputSignal.activeGlow && btn.active("active:shadow-lg active:shadow-blue-500/50");
-  inputSignal.activeRotate && btn.active("active:rotate-3");
-  inputSignal.activeBounce && btn.active("active:animate-bounce");
-  inputSignal.activePulse && btn.active("active:animate-pulse");
-
-  inputSignal.focusRing && btn.focus("focus:ring-4 focus:ring-blue-500");
-  inputSignal.focusGlow && btn.focus("focus:shadow-lg focus:shadow-blue-500/50");
-  inputSignal.focusScale && btn.focus("focus:scale-105");
-  inputSignal.focusNone && btn.focus("focus:outline-none");
+  inputSignal.xs && (btn.size("px-2 py-1"),btn.textSize("text-xs"));
+  inputSignal.sm && (btn.size("px-3 py-1.5"),btn.textSize("text-sm"));
+  inputSignal.md && (btn.size("px-4 py-2"),btn.textSize("text-base"));
+  inputSignal.lg && (btn.size("px-6 py-3"),btn.textSize("text-lg"));
+  inputSignal.xl && (btn.size("px-8 py-4"),btn.textSize("text-xl"));
+  inputSignal['2xl'] && (btn.size("px-10 py-5"),btn.textSize("text-2xl"));
+  inputSignal['3xl'] && (btn.size("px-12 py-6"),btn.textSize("text-3xl"));
+  inputSignal['4xl'] && (btn.size("px-16 py-8"),btn.textSize("text-4xl"));
 
   inputSignal.bold && btn.textWeight("font-bold");
   inputSignal.semibold && btn.textWeight("font-semibold");
@@ -587,7 +396,6 @@ export function Button(contract = {}) {
 
   inputSignal.underline && btn.textDecoration("underline");
   inputSignal.lineThrough && btn.textDecoration("line-through");
-  inputSignal.overline && btn.textDecoration("overline");
 
   inputSignal.textXs && btn.textSize("text-xs");
   inputSignal.textSm && btn.textSize("text-sm");
@@ -599,29 +407,36 @@ export function Button(contract = {}) {
   inputSignal.textLeft && btn.textLayer("text-left");
   inputSignal.textCenter && btn.textLayer("text-center");
   inputSignal.textRight && btn.textLayer("text-right");
-  inputSignal.textJustify && btn.textLayer("text-justify");
+
+
+  inputSignal.hoverEnlarge && btn.hover("hover:scale-105");
+  inputSignal.hoverShrink && btn.hover("hover:scale-95");
+  inputSignal.hoverLift && btn.hover("hover:-translate-y-0.5");
+  inputSignal.hoverGlow && btn.hover("hover:shadow-lg hover:shadow-blue-500/50");
+  inputSignal.hoverRotate && btn.hover("hover:rotate-3");
+  inputSignal.hoverScale && btn.hover("hover:scale-110");
+  inputSignal.hoverBounce && btn.hover("hover:animate-bounce");
+  inputSignal.hoverSpin && btn.hover("hover:animate-spin");
+  inputSignal.hoverNone && btn.hover("hover:scale-100 hover:rotate-0 hover:translate-y-0 hover:shadow-none");
+
+  inputSignal.activeShrink && btn.active("active:scale-95");
+  inputSignal.activeRipple && btn.active("active:ring-4 active:ring-black active:scale-90");
+  inputSignal.activeExplode && btn.active("active:scale-110 active:ring-8 active:ring-black");
+  inputSignal.activeRotate && btn.active("active:rotate-3");
+  inputSignal.activeBounce && btn.active("active:animate-bounce");
+  inputSignal.activePulse && btn.active("active:animate-pulse");
+  inputSignal.activeNone && btn.active("active:scale-100 active:shadow-none active:ring-0 active:ring-offset-0");
 
   inputSignal.animateSpin && btn.animation("animate-spin");
   inputSignal.animatePulse && btn.animation("animate-pulse");
   inputSignal.animateBounce && btn.animation("animate-bounce");
-  inputSignal.animatePing && btn.animation("animate-ping");
-  inputSignal.transitionNone && btn.animation("transition-none");
   inputSignal.transitionFast && btn.animation("transition-all duration-150");
   inputSignal.transitionSlow && btn.animation("transition-all duration-700");
   inputSignal.transitionAll && btn.animation("transition-all duration-300 ease-in-out");
-  inputSignal.transitionColors && btn.animation("transition-colors duration-300");
-  inputSignal.transitionTransform && btn.animation("transition-transform duration-300");
-  inputSignal.transitionOpacity && btn.animation("transition-opacity duration-300");
-  inputSignal.transitionNone && btn.animation("transition-none");
 
-  inputSignal.loading && (
-    btn.color("opacity-75 cursor-not-allowed"),
-    data("disabled")
-  );
-  inputSignal.disabled && (
-    btn.color("opacity-50 cursor-not-allowed"),
-    data("disabled")
-  );
+
+  inputSignal.loading && (btn.color("opacity-75 cursor-not-allowed"), data("disabled"));
+  inputSignal.disabled && (btn.color("opacity-50 cursor-not-allowed"), data("disabled"));
   inputSignal.selected && btn.color("ring-2 ring-blue-500 ring-offset-2");
   inputSignal.pressed && btn.active("scale-95");
 
@@ -629,25 +444,16 @@ export function Button(contract = {}) {
   inputSignal.absolute && btn.layout("absolute");
   inputSignal.fixed && btn.layout("fixed");
   inputSignal.sticky && btn.layout("sticky");
-  inputSignal.m0 && btn.layout("m-0");
-  inputSignal.m1 && btn.layout("m-1");
-  inputSignal.m2 && btn.layout("m-2");
-  inputSignal.m4 && btn.layout("m-4");
-  inputSignal.m8 && btn.layout("m-8");
-  inputSignal.p0 && btn.layout("p-0");
-  inputSignal.p1 && btn.layout("p-1");
-  inputSignal.p2 && btn.layout("p-2");
-  inputSignal.p4 && btn.layout("p-4");
-  inputSignal.p8 && btn.layout("p-8");
+  inputSignal.block && btn.layout("w-full");
+  inputSignal.inline && btn.layout("inline-flex");
+  inputSignal.center && btn.layout("mx-auto");
   inputSignal.flexRow && btn.layout("flex-row");
   inputSignal.flexCol && btn.layout("flex-col");
-  inputSignal.flexWrap && btn.layout("flex-wrap");
-  inputSignal.flexNowrap && btn.layout("flex-nowrap");
   inputSignal.gap1 && btn.layout("gap-1");
   inputSignal.gap2 && btn.layout("gap-2");
   inputSignal.gap4 && btn.layout("gap-4");
-  inputSignal.gap8 && btn.layout("gap-8");
 
+  inputSignal.className && data("className");
   inputSignal.children && data("children");
   inputSignal.onClick && data("onClick");
   inputSignal.type && data("type");
@@ -693,7 +499,7 @@ export function Button(contract = {}) {
         aria-expanded={dataSignal["aria-expanded"]}
         onMouseEnter={dataSignal.onMouseEnter}
         onMouseLeave={dataSignal.onMouseLeave}
-        className={classes(layerSignal.btn)}
+        className={`${classes(layerSignal.btn)} ${dataSignal.className || ''}`}
       >
         {dataSignal.children}
 

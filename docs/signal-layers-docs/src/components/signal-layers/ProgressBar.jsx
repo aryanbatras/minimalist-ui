@@ -1,3 +1,21 @@
+/**
+ * ProgressBar - Customizable progress bar with various themes and sizes
+ * 
+ * SIGNALS
+ *   SHAPE: square
+ *   TONE: primary, success, danger, neutral, transparent
+ *   SIZE: xs, sm, md, lg, xl, responsive
+ *   LAYOUT: inline, block, centered
+ * 
+ * DATA PROPS
+ *   REQUIRED: None
+ *   OPTIONAL: value=0, max=100, className=""
+ * 
+ * DEFAULTS: md size, violet-400 progress, slate-300 track, fully rounded, block layout
+ * 
+ * USAGE: <ProgressBar value={75} /> | <ProgressBar lg primary value={60} max={120} /> | <ProgressBar responsive success value={90} /> | <ProgressBar square danger value={3} max={10} />
+ */
+
 import { createSignalUtils } from "./";
 export function ProgressBar(contract = {}) {
   const { layer, data, state, classes, signals } = createSignalUtils(contract);
@@ -36,6 +54,7 @@ export function ProgressBar(contract = {}) {
 
   inputSignal.value && data("value");
   inputSignal.max && data("max");
+  inputSignal.className && data("className");
 
   const value =
     dataSignal.value !== undefined
@@ -46,10 +65,7 @@ export function ProgressBar(contract = {}) {
     <progress
       value={value}
       max={dataSignal.max ?? 100}
-      className={Object.values(layerSignal.progressbar)
-        .map((l) => l[0])
-        .filter(Boolean)
-        .join(" ")}
+      className={`${classes(layerSignal.progressbar)} ${dataSignal.className || ''}`}
     />
   );
 }

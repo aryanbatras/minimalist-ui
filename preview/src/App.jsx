@@ -1,9 +1,23 @@
-import { Button } from "signal-layers";
+import { Button, Card, Dropdown, FabMenu } from "signal-layers";
 
 export default function App() {
   return (
     <div className="min-h-screen w-screen p-8 bg-gray-50">
       <div className="max-w-7xl mx-auto space-y-12">
+
+        <Dropdown items={[
+          {label: "Item 1"},
+          {label: "Item 2", href: "https://example.com"},
+          {label: "Item 3"}
+        ]} menuName="Menu Name" onItemSelect={(item) => console.log(item)} onMenuClick={(item) => console.log(item)} />
+
+        <FabMenu actions={[
+          {icon: "1", onClick: () => console.log("Item 1")},
+          {icon: "2", onClick: () => console.log("Item 2")},
+          {icon: "3", onClick: () => console.log("Item 3")}
+        ]} />
+
+        <Card title="Card Title" description="Card Description" buttonLabel="Button Label" onButtonClick={() => {}} />
         
         {/* Tone/Visual Group */}
         <section>
@@ -115,21 +129,21 @@ export default function App() {
           </div>
         </section>
 
-        {/* Combinations */}
+        {/* Core Signal Combinations */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">Signal Combinations</h2>
+          <h2 className="text-2xl font-bold mb-4">Core Signal Combinations</h2>
           <div className="flex flex-wrap gap-4">
             <Button primary lg bold hoverGlow>Primary Large Bold Glow</Button>
             <Button danger xl uppercase hoverScale>Danger XL Uppercase Scale</Button>
-            <Button success radius2xl animatePulse>Success Round Pulse</Button>
+            <Button success rounded animatePulse>Success Rounded Pulse</Button>
             <Button outline lg focusRing>Outline Large Focus Ring</Button>
-            <Button ghost md hoverBounce activeGlow>Ghost Bounce Active Glow</Button>
+            <Button ghost md hoverBounce activeExplode>Ghost Bounce Active Explode</Button>
           </div>
         </section>
 
         {/* Premium Visual Effects */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">Clean Visual Effects</h2>
+          <h2 className="text-2xl font-bold mb-4">Premium Visual Effects</h2>
           <div className="flex flex-wrap gap-4">
             <Button glass>Glass</Button>
             <Button glassDark>Glass Dark</Button>
@@ -147,7 +161,7 @@ export default function App() {
 
         {/* Advanced Interactive Effects */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">Clean Interactive Effects</h2>
+          <h2 className="text-2xl font-bold mb-4">Advanced Interactive Effects</h2>
           <div className="flex flex-wrap gap-4">
             <Button primary bounceIn>Bounce In</Button>
             <Button primary slideIn>Slide In</Button>
@@ -162,21 +176,14 @@ export default function App() {
           </div>
         </section>
 
-        {/* Clean State Combinations */}
+        {/* Refined Color Variants */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">Clean State Combinations</h2>
+          <h2 className="text-2xl font-bold mb-4">Refined Color Variants</h2>
           <div className="flex flex-wrap gap-4">
             <Button gentle>Gentle</Button>
             <Button warm>Warm</Button>
             <Button cool>Cool</Button>
             <Button minimalist>Minimalist</Button>
-          </div>
-        </section>
-
-        {/* Clean Micro-interactions */}
-        <section>
-          <h2 className="text-2xl font-bold mb-4">Clean Micro-interactions</h2>
-          <div className="flex flex-wrap gap-4">
             <Button shine>Shine</Button>
             <Button fresh>Fresh</Button>
             <Button depth>Depth</Button>
@@ -186,9 +193,9 @@ export default function App() {
           </div>
         </section>
 
-        {/* Clean Combinations */}
+        {/* Premium Combinations */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">Clean Signal Combinations</h2>
+          <h2 className="text-2xl font-bold mb-4">Premium Signal Combinations</h2>
           <div className="flex flex-wrap gap-4">
             <Button gradientPrimary lg bold>Gradient Primary Large Bold</Button>
             <Button bright xl bounceIn>Bright XL Bounce</Button>
@@ -200,58 +207,6 @@ export default function App() {
             <Button fresh rotate>Fresh Rotate</Button>
             <Button calm depth>Calm Depth</Button>
             <Button plush liquid>Plush Liquid</Button>
-          </div>
-        </section>
-
-        {/* Professional Production-Ready Styles */}
-        <section>
-          <h2 className="text-2xl font-bold mb-4">Professional Production Styles</h2>
-          <div className="flex flex-wrap gap-4">
-            <Button apple>Apple</Button>
-            <Button google>Google</Button>
-            <Button spotify>Spotify</Button>
-            <Button github>GitHub</Button>
-            <Button slack>Slack</Button>
-            <Button discord>Discord</Button>
-            <Button twitter>Twitter</Button>
-            <Button linkedin>LinkedIn</Button>
-            <Button facebook>Facebook</Button>
-            <Button amazon>Amazon</Button>
-            <Button netflix>Netflix</Button>
-            <Button microsoft>Microsoft</Button>
-            <Button adobe>Adobe</Button>
-            <Button dropbox>Dropbox</Button>
-            <Button airbnb>Airbnb</Button>
-            <Button uber>Uber</Button>
-            <Button paypal>PayPal</Button>
-            <Button stripe>Stripe</Button>
-            <Button shopify>Shopify</Button>
-          </div>
-        </section>
-
-        {/* Professional Combinations */}
-        <section>
-          <h2 className="text-2xl font-bold mb-4">Professional Signal Combinations</h2>
-          <div className="flex flex-wrap gap-4">
-            <Button apple lg bold>Apple Large Bold</Button>
-            <Button google md hoverScale>Google Scale</Button>
-            <Button spotify xl bounceIn>Spotify Bounce</Button>
-            <Button github hoverGlow>GitHub Glow</Button>
-            <Button slack slideUp>Slack Slide</Button>
-            <Button discord elastic>Discord Elastic</Button>
-            <Button twitter zoom>Twitter Zoom</Button>
-            <Button linkedin rotate>LinkedIn Rotate</Button>
-            <Button facebook magnetic>Facebook Magnetic</Button>
-            <Button amazon liquid>Amazon Liquid</Button>
-            <Button netflix wobble>Netflix Wobble</Button>
-            <Button microsoft pulseGlow>Microsoft Pulse</Button>
-            <Button adobe depth>Adobe Depth</Button>
-            <Button dropbox slideIn>Dropbox Slide</Button>
-            <Button airbnb bounceIn>Airbnb Bounce</Button>
-            <Button uber hoverEnlarge>Uber Enlarge</Button>
-            <Button paypal slideUp>PayPal Slide</Button>
-            <Button stripe zoom>Stripe Zoom</Button>
-            <Button shopify rotate>Shopify Rotate</Button>
           </div>
         </section>
 

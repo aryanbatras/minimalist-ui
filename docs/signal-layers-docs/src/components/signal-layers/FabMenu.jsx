@@ -1,3 +1,22 @@
+/**
+ * FabMenu - Floating action button with expandable menu actions
+ * 
+ * SIGNALS
+ *   POSITION: bottomRight, bottomLeft, topRight, topLeft
+ *   SIZE: sm, md, lg, xl
+ *   ACTIONS LAYOUT: actionsTop, actionsBottom, actionsLeft, actionsRight
+ *   STATE: disabled
+ *   INTERACTION: reactHover
+ * 
+ * DATA PROPS
+ *   REQUIRED: icon (ReactNode), actions (Array of {icon, label?, onClick?})
+ *   OPTIONAL: className=""
+ * 
+ * DEFAULTS: bottomRight position, md size, cta styling, actions above FAB, click interaction
+ * 
+ * USAGE: <FabMenu icon="+" actions={[{icon: "📝", label: "New Note", onClick: handleNewNote}, {icon: "📷", label: "Take Photo", onClick: handleCamera}]} /> | <FabMenu lg topLeft icon="⚙️" actions={settingsActions} /> | <FabMenu reactHover icon="🎨" actions={colorActions} />
+ */
+
 import { Button, createSignalUtils } from "./";
 export function FabMenu(contract = {}) {
   const { layer, data, state, classes, signals } = createSignalUtils(contract);
@@ -52,6 +71,7 @@ export function FabMenu(contract = {}) {
 
     inputSignal.icon && data("icon");
     inputSignal.actions && data("actions");
+    inputSignal.className && data("className");
 
     state("reactHover", 0);
     state("reactClick", 0);
@@ -64,7 +84,7 @@ export function FabMenu(contract = {}) {
             sm
             ghost
             onClick={() => {
-                action.onClick();
+                action.onClick?.();
                 stateSignal.reactClick?.set &&
                 stateSignal.reactClick?.set(!stateSignal.reactClick.get);
             }}
@@ -76,7 +96,17 @@ export function FabMenu(contract = {}) {
     );
 
     return (
-        <div className={classes(layerSignal.root)}>
+        <div 
+        className={`${classes(layerSignal.root)} ${dataSignal.className || ''}`}
+         onMouseEnter={
+                    stateSignal.reactHover?.set &&
+                    (() => stateSignal.reactHover.set(true))
+                }
+                onMouseLeave={
+                    stateSignal.reactHover?.set &&
+                    (() => stateSignal.reactHover.set(false))
+                }
+        >
 
             <div className={classes(layerSignal.actions)}>
                 {(stateSignal.reactHover?.get || stateSignal.reactClick?.get) &&
@@ -94,14 +124,6 @@ export function FabMenu(contract = {}) {
                 onClick={() =>
                     stateSignal.reactClick?.set &&
                     stateSignal.reactClick?.set(!stateSignal.reactClick.get)
-                }
-                onMouseEnter={
-                    stateSignal.reactHover?.set &&
-                    (() => stateSignal.reactHover.set(true))
-                }
-                onMouseLeave={
-                    stateSignal.reactHover?.set &&
-                    (() => stateSignal.reactHover.set(false))
                 }
                 className={classes(layerSignal.fab)}
             >

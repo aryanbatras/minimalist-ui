@@ -1,3 +1,23 @@
+/**
+ * Spinner - Loading spinner with customizable size, color, and animation speed
+ * 
+ * SIGNALS
+ *   SIZE: xs, sm, md, lg, xl
+ *   COLOR: light, primary, danger
+ *   BORDER: thin, thick
+ *   ANIMATION: spinSlow, spinFast, pause
+ *   LAYOUT: inline, block, centered
+ *   VISIBILITY: transparent
+ * 
+ * DATA PROPS
+ *   REQUIRED: None
+ *   OPTIONAL: ariaLabel="loading", className=""
+ * 
+ * DEFAULTS: md size, black border, 2px thickness, normal spin, inline layout, full opacity
+ * 
+ * USAGE: <Spinner /> | <Spinner lg primary ariaLabel="Loading content" /> | <Spinner sm light /> | <Spinner xl thick danger spinFast />
+ */
+
 import { createSignalUtils } from "./";
 export function Spinner(contract = {}) {
   const { layer, data, state, classes, signals } = createSignalUtils(contract);
@@ -47,12 +67,13 @@ export function Spinner(contract = {}) {
   inputSignal.transparent && spinner.visibility("opacity-25");
 
   inputSignal.ariaLabel && data("ariaLabel");
+  inputSignal.className && data("className");
 
   return (
     <div
       role="status"
       aria-label={dataSignal.ariaLabel || "loading"}
-      className={classes(layerSignal.spinner)}
+      className={`${classes(layerSignal.spinner)} ${dataSignal.className || ''}`}
     />
   );
 }

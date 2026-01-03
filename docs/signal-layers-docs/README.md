@@ -120,3 +120,20 @@ Semantic Grouping
 Unlike Tailwind's utility classes, signals group related dimensions.
 Intent signals express complete design decisions.
 Maintainable through clear semantic meaning.
+
+## The Scrolling Animation
+
+1. EXPLAINING THE ARCHITECTURE OF SIGNAL UI BASED ON 4 LEVELS OF SIGNALS - inputSignal aka intent, layerSignal aka layers, dataSignals aka data, stateSignals aka state. You can write and explain it better. Along with code. What code??? The core engine, the real thing. At @signal-utils.js 
+
+2. Explain how a button has to be broken down into layers of dimensions along with why. Enforce a strong reason before you show layers. Check @Button.jsx 
+
+3. Explain how default animations are being applied in code. And then how individual dimensions are being replaced with inputSignals. 
+
+4. Finally, express it's power showcasing how we can combine different dimensions and layers together in one inputSignal in any way we want without affecting other signals.
+
+5. Explain how easy it is to edit and mdify. And how it is meant to edit and modify and how nothing of that is going to break anything.
+
+6. Also explain some rules, like order preservance matters, if some tailwind overlap last one wins. And explain how inputSignals are not allowed to be used directly in render section but layerSignals, dataSignals or stateSIgnals. This design enforces explicit declaration nature and avoids further surprises.
+
+7. Explain anything else if you want. This section is optional.
+

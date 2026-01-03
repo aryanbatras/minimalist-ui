@@ -1,3 +1,24 @@
+/**
+ * Slider - Range slider with value bubble and extensive customization
+ * 
+ * SIGNALS
+ *   SIZE: xs, sm, md, lg, xl
+ *   BUBBLE SIZE: bubbleXs, bubbleSm, bubbleMd, bubbleLg, bubbleXl
+ *   BUBBLE SHAPE: bubbleSquare, bubblePill, bubbleFlat, bubbleSharp
+ *   TONE: primary, neutral
+ *   SHAPE: square, pill
+ *   LAYOUT: inline, block, centered
+ *   STATE: disabled
+ * 
+ * DATA PROPS
+ *   REQUIRED: None
+ *   OPTIONAL: min=0, max=100, step=1, value, defaultValue=0, onChange, ariaLabel, className=""
+ * 
+ * DEFAULTS: md size, gray-900 track, white thumb, fully rounded, inline layout, white bubble shows when sliding
+ * 
+ * USAGE: <Slider value={volume} onChange={setVolume} ariaLabel="Volume" /> | <Slider lg primary min={0} max={200} step={10} value={brightness} onChange={setBrightness} /> | <Slider sm bubbleSm bubblePill value={zoom} min={50} max={200} />
+ */
+
 import { createSignalUtils } from "./";
 export function Slider(contract = {}) {
   const { layer, data, state, classes, signals } = createSignalUtils(contract);
@@ -93,6 +114,8 @@ export function Slider(contract = {}) {
   inputSignal.onChange && data("onChange");
   inputSignal.defaultValue && data("defaultValue");
   inputSignal.value && data("value");
+  inputSignal.className && data("className");
+
   state("isSliding", 1, false);
   state("value", 2, dataSignal.defaultValue ?? 0);
 
@@ -108,7 +131,7 @@ export function Slider(contract = {}) {
   };
 
   return (
-    <div className={classes(layerSignal.container)}>
+    <div className={`${classes(layerSignal.container)} ${dataSignal.className || ''}`}>
       <input
         type="range"
         min={dataSignal.min ?? 0}

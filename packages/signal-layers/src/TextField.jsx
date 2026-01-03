@@ -1,3 +1,24 @@
+/**
+ * TextField - Versatile text input with floating label, validation, and hint support
+ * 
+ * SIGNALS
+ *   STYLE: outline, fill, underline
+ *   SIZE: xs, sm, md, lg, xl
+ *   TONE: primary, neutral, danger
+ *   SHAPE: square
+ *   LAYOUT: inline, block, full
+ *   STATE: disabled, readonly, invalid
+ * 
+ * DATA PROPS
+ *   REQUIRED: None
+ *   OPTIONAL: value, defaultValue="", placeholder=" ", label, name, type="text", onChange, onFocus, onBlur, ariaLabel, disabled=false, readOnly=false, required=false, pattern, hintMsg, errorMsg, className=""
+ *   NUMBER TYPE: min, max, step
+ * 
+ * DEFAULTS: underline style, md size, gray-900 focus, floating label, built-in validation, smooth transitions
+ * 
+ * USAGE: <TextField label="Name" value={name} onChange={setName} /> | <TextField lg outline primary label="Email" type="email" required value={email} onChange={setEmail} errorMsg="Invalid email" /> | <TextField md label="Age" type="number" min={18} max={100} value={age} onChange={setAge} hintMsg="Must be 18-100" />
+ */
+
 import { createSignalUtils } from "./";
 export function TextField(contract = {}) {
   const { layer, data, state, classes, signals } = createSignalUtils(contract);
@@ -124,6 +145,8 @@ export function TextField(contract = {}) {
   inputSignal.type && data("type");
   inputSignal.required && data("required");
   inputSignal.pattern && data("pattern");
+  inputSignal.className && data("className");
+
   data("cachedPattern");
   state("value", 1, dataSignal.defaultValue ?? "");
   state("focused", 2, false);
@@ -142,7 +165,7 @@ export function TextField(contract = {}) {
     (dataSignal.cachedPattern = new RegExp(dataSignal.pattern));
 
   return (
-    <div className={classes(layerSignal.container)}>
+    <div className={`${classes(layerSignal.container)} ${dataSignal.className || ''}`}>
       {dataSignal.label && (
         <label className={classes(layerSignal.label)}>{dataSignal.label}</label>
       )}

@@ -1,3 +1,26 @@
+/**
+ * CheckBox - Customizable checkbox with extensive styling and label positioning
+ * 
+ * SIGNALS
+ *   TONE: primary, secondary, danger, success, warning, info, dark, light, neutral, brand, accent, ghost, outline, filled, glass, gradient, minimal
+ *   SIZE: xs, sm, md, lg
+ *   SHAPE: square, rounded, pill
+ *   INTERACTION: hoverScale, pressShrink, hoverGlow, hoverLift, pressRotate, pressPulse, focusRing, focusGlow, focusScale
+ *   STATE: loading, readonly
+ *   BORDER: borderNone, borderThick, borderDashed
+ *   LABEL POSITION: labelLeft, labelRight, labelBottom, labelTop, labelStart, labelEnd
+ *   LABEL STYLE: labelBold, labelSemibold, labelMedium, labelRegular, labelLight, labelThin, labelUppercase, labelLowercase, labelCapitalize, labelItalic, labelUnderline, labelLineThrough
+ *   SPACING: spaced, compact, tight, snug, normal, relaxed, loose, extraLoose
+ * 
+ * DATA PROPS
+ *   REQUIRED: None
+ *   OPTIONAL: label, checked, defaultChecked=false, onChange, disabled=false, ariaLabel, ariaLabelledBy, ariaDescribedBy, ariaInvalid, name, value, form, tabIndex, className=""
+ * 
+ * DEFAULTS: sm size, gray-300 border, rounded-sm, text-sm label, left positioned, gap-2 spacing
+ * 
+ * USAGE: <CheckBox label="Accept terms" checked={accepted} onChange={setAccepted} /> | <CheckBox primary rounded hoverScale focusRing label="Primary option" /> | <CheckBox lg labelRight success label="Enable notifications" />
+ */
+
 import { createSignalUtils } from "./";
 export function CheckBox(contract = {}) {
     const { layer, data, state, classes, signals } = createSignalUtils(contract);
@@ -34,24 +57,24 @@ export function CheckBox(contract = {}) {
         layout: layer("layout", "label")
     }
  
-    container.base("relative flex flex-row justify-center items-center");
+    container.base("relative flex justify-center items-center");
     container.color("bg-transparent");
-    container.size("h-3 w-3");
-    container.layout("gap-2");
+    container.size("h-full w-full");
+    container.layout("flex-row gap-2");
 
-    checkbox.base("absolute inset-0 appearance-none cursor-pointer");
+    checkbox.base("relative inset-0 appearance-none cursor-pointer");
     checkbox.color("border-gray-300 bg-transparent");
     checkbox.size("h-3 w-3 checked:after:text-[8px]");
     checkbox.border("border-2");
     checkbox.shape("rounded-sm");
     checkbox.layout("transition-all duration-200");
-    checkbox.checked(" checked:after:leading-none checked:border-blue-600 checked:bg-gray-300 checked:after:content-['✓'] checked:after:absolute checked:after:top-1/2 checked:after:left-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2");
+    checkbox.checked("checked:after:leading-none checked:border-blue-600 checked:bg-gray-300 checked:after:content-['✓'] checked:after:absolute checked:after:top-1/2 checked:after:left-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2");
 
-    label.base("absolute cursor-pointer");
+    label.base("relative flex items-center cursor-pointer");
     label.color("text-gray-800");
     label.font("font-light");
     label.size("text-sm");
-    label.layout("left-5");
+    label.layout("left-0");
 
     inputSignal.primary && checkbox.color("border-blue-600 checked:bg-blue-50 checked:border-blue-600");
     inputSignal.secondary && checkbox.color("border-gray-600 checked:bg-gray-50 checked:border-gray-600");
@@ -71,16 +94,10 @@ export function CheckBox(contract = {}) {
     inputSignal.gradient && checkbox.color("border-transparent bg-linear-to-r from-blue-500 to-purple-500 checked:from-blue-600 checked:to-purple-600");
     inputSignal.minimal && checkbox.color("border-gray-200 bg-transparent checked:border-gray-400 checked:bg-gray-50");
  
-
     inputSignal.square && checkbox.shape("rounded-none");
     inputSignal.rounded && checkbox.shape("rounded-sm");
     inputSignal.pill && checkbox.shape("rounded-full");
 
-    inputSignal.hoverScale && checkbox.hover("hover:scale-105");
-    inputSignal.pressShrink && checkbox.hover("active:scale-95");
-
-    inputSignal.focusRing && checkbox.focus("focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1");
-    
     inputSignal.loading && checkbox.interactive("opacity-50 cursor-wait");
     inputSignal.readonly && checkbox.interactive("cursor-not-allowed opacity-60");
 
@@ -88,24 +105,18 @@ export function CheckBox(contract = {}) {
     inputSignal.borderThick && checkbox.border("border-4");
     inputSignal.borderDashed && checkbox.border("border-2 border-dashed");
 
-    inputSignal.xs && (label.size("text-xs"), container.size("h-2 w-2"), checkbox.size("h-2 w-2 checked:after:text-[4px]"));
-    inputSignal.sm && (label.size("text-sm"), container.size("h-3 w-3"), checkbox.size("h-3 w-3 checked:after:text-[8px]"));
-    inputSignal.md && (label.size("text-md"), container.size("h-4 w-4"), checkbox.size("h-4 w-4 checked:after:text-[10px]"));
-    inputSignal.lg && (label.size("text-lg"), container.size("h-5 w-5"), checkbox.size("h-5 w-5 checked:after:text-[12px]"));
-       
-    inputSignal.hoverGlow && checkbox.hover("hover:shadow-lg hover:shadow-blue-500/25");
-    inputSignal.hoverLift && checkbox.hover("hover:-translate-y-0.5 hover:shadow-md");
-    inputSignal.pressRotate && checkbox.active("active:rotate-90");
-    inputSignal.pressPulse && checkbox.active("active:animate-pulse");
-    inputSignal.focusGlow && checkbox.focus("focus:shadow-lg focus:shadow-blue-500/25");
-    inputSignal.focusScale && checkbox.focus("focus:scale-110");
+    inputSignal.xs && (label.size("text-xs"), checkbox.size("h-2 w-2 checked:after:text-[4px]"));
+    inputSignal.sm && (label.size("text-sm"), checkbox.size("h-3 w-3 checked:after:text-[8px]"));
+    inputSignal.md && (label.size("text-md"), checkbox.size("h-4 w-4 checked:after:text-[10px]"));
+    inputSignal.lg && (label.size("text-lg"), checkbox.size("h-5 w-5 checked:after:text-[12px]"));
       
-    inputSignal.labelLeft && label.layout("left-5");
-    inputSignal.labelRight && label.layout("right-5");
-    inputSignal.labelBottom && label.layout("top-5");
-    inputSignal.labelTop && label.layout("bottom-5");
-    inputSignal.labelStart && label.layout("left-5 rtl:right-5");
-    inputSignal.labelEnd && label.layout("right-5 rtl:left-5");
+    inputSignal.labelTop && container.layout("flex-col-reverse gap-2");
+    inputSignal.labelBottom && container.layout("flex-col gap-2");
+    
+    inputSignal.labelLeft && label.layout("left-0 order-last");
+    inputSignal.labelRight && label.layout("right-0 order-first");
+    inputSignal.labelStart && label.layout("order-first gap-2");
+    inputSignal.labelEnd && label.layout("order-last gap-2");
        
     inputSignal.labelBold && label.font("font-bold");
     inputSignal.labelSemibold && label.font("font-semibold");
@@ -121,15 +132,6 @@ export function CheckBox(contract = {}) {
     inputSignal.labelItalic && label.font("italic");
     inputSignal.labelUnderline && label.font("underline");
     inputSignal.labelLineThrough && label.font("line-through");
-    
-    inputSignal.spaced && container.layout("space-x-2");
-    inputSignal.compact && container.layout("space-x-1");
-    inputSignal.tight && container.layout("gap-0");
-    inputSignal.snug && container.layout("gap-1");
-    inputSignal.normal && container.layout("gap-2");
-    inputSignal.relaxed && container.layout("gap-3");
-    inputSignal.loose && container.layout("gap-4");
-    inputSignal.extraLoose && container.layout("gap-6");
 
     inputSignal.label && data("label");
     inputSignal.checked && data("checked");
@@ -144,11 +146,12 @@ export function CheckBox(contract = {}) {
     inputSignal.value && data("value");
     inputSignal.form && data("form");
     inputSignal.tabIndex && data("tabIndex");
+    inputSignal.className && data("className");
     
-    state("checked", 1, 0);
+    state("checked", 1, dataSignal.defaultChecked ?? false);
 
     return (
-        <div className={classes(layerSignal.container)}>
+        <div className={`${classes(layerSignal.container)} ${dataSignal.className || ''}`}>
 
         <input 
         type="checkbox" 
@@ -172,5 +175,4 @@ export function CheckBox(contract = {}) {
 
         </div>
   )
- 
 }
