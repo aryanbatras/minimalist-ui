@@ -9,7 +9,7 @@ function App() {
 
   return (
     <SidebarProvider>
-    <Router>
+    <Router basename="/signal-ui">
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/docs" element={<DocsPage />} />
